@@ -57,6 +57,46 @@
                 <source src="./slp.breathe.mp4" type="video/mp4" />
               </video> 
             </section>
+
+            <style>
+              #pet_container, #pet_container2 {
+                position:relative;
+              }
+              
+              #pet {
+                  position: absolute;
+                  left: 140px;
+                  top: 40px;
+              }
+
+              #pet2 {
+                position: absolute;
+                  left: 140px;
+                  top: 40px;
+              }
+            </style>
+            <input id="tab3" type="radio" name="tabs" class="tab-toggle">
+            <label for="tab3" class="tab-label">Converted to gif</label>
+            <section class="tab-content" style="text-align: center;">
+
+              <div id="pet_container">
+                <img src="./223.jpg" id="background" />
+                <img src="./breathe-unscreen.gif" id="pet" />
+              </div>
+            </section>
+
+            
+
+            <input id="tab4" type="radio" name="tabs" class="tab-toggle">
+            <label for="tab4" class="tab-label">Converted to webm</label>
+            <section class="tab-content" style="text-align: center;">
+              <div id="pet_container2">
+                <img src="./223.jpg" id="background" />
+                <video width="440" height="auto" loop="loop" autoplay="autoplay" class="video" id="pet2">
+                  <source src="./slp.breathe.webm" type="video/webm" />
+                </video>
+              </div>
+            </section>
           </div>
                  
             
