@@ -218,7 +218,7 @@ class Pet extends Phaser.Scene
                 pet.changeSource(`${mouse[randomIntFromInterval(0, mouse.length-1)]}`, true, false);
             }
             else if (pet.getVideoKey().startsWith('clos')) {pet.changeSource(`sta.fromclos`, true, false);}
-            else if (pet.getVideoKey().startsWith('situp')) {pet.changeSource(`waterin`, true, false);}
+            else if (pet.getVideoKey().startsWith('situp')) {pet.changeSource(`sta.fromsitup`, true, false);}
             else if (pet.getVideoKey().startsWith('sitdwn')) {pet.changeSource(`sta.fromsitdwn`, true, false);}
             else if (pet.getVideoKey().startsWith('sit')) {pet.changeSource(`sta.fromsit`, true, false);}
             else if (pet.getVideoKey().startsWith('lay')) {pet.changeSource(`sta.fromlay`, true, false);}
