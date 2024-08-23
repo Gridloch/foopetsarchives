@@ -13,6 +13,6 @@ class Load extends Phaser.Scene
 
     create ()
     { 
-        this.scene.start('pet');
+        this.scene.start('cat');
     }
 }
