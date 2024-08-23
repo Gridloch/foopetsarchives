@@ -8,7 +8,6 @@
     <link rel="shortcut icon" href="/favicon.gif">
     <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
     <script src="//cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script>
-    <script src="https://unpkg.com/@esotericsoftware/spine-phaser@4.1.*/dist/iife/spine-phaser.js"></script>
     <script src="./js/loadScreen.js"></script> 
     <script src="./js/cat.js"></script> 
   </head>
@@ -39,11 +38,6 @@
                 width: 748,
                 height: 330,
                 backgroundColor: '#110c27',
-                plugins: {
-                    scene: [
-                    { key: "spine.SpinePlugin", plugin: spine.SpinePlugin, mapping: "spine" }
-                    ]
-                },
                 scene: [
                     Load,
                     Cat
@@ -56,7 +50,7 @@
       </div>
       <br>
 
-      Note: This is a VERY rough start at trying to display the archived FooPets pet videos using spritesheets in place of videos.
+      Note: This is a test for displaying the archived FooPets pet videos using spritesheets in place of videos. The video format test is <a href="./index.html">here</a>
 
       
         

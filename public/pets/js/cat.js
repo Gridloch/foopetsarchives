@@ -3,7 +3,7 @@ class Cat extends Phaser.Scene
     constructor ()
     {
         super({
-            key: 'cat'
+            key: 'pet'
         });
     }
 
@@ -244,8 +244,8 @@ class Cat extends Phaser.Scene
             });
         // const closHead1 = this.add.graphics().fillStyle(0x000000).fillRect(296, 65, 120, 80).setAlpha(.5);
         // const closNeck = this.add.graphics().fillStyle(0x000000).fillRect(300, 145, 120, 80).setAlpha(.5);
-        const closHead = this.add.graphics().setInteractive(new Phaser.Geom.Rectangle(296, 65, 120, 80), Phaser.Geom.Rectangle.Contains);
-        const closNeck = this.add.graphics().setInteractive(new Phaser.Geom.Rectangle(300, 145, 120, 80), Phaser.Geom.Rectangle.Contains);
+        const closHead = this.add.graphics().setInteractive({ hitArea: new Phaser.Geom.Rectangle(296, 65, 120, 80), hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        const closNeck = this.add.graphics().setInteractive({ hitArea: new Phaser.Geom.Rectangle(300, 145, 120, 80), hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
 
         this.input.setDraggable([closHead, closNeck]);
         this.input.dragDistanceThreshold = 32;
