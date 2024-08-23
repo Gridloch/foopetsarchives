@@ -23,6 +23,8 @@ class Pet extends Phaser.Scene
         // Load in images and sounds
         // this.load.atlas('petSprite', '../../videos/abyssinian/spritesheet.png', '../../videos/abyssinian/sprites.json');
         // this.load.audio('background_music', ['./sounds/stable_soundtrack.mp3']);
+        this.load.audio('meowSound', ['../../videos/sounds/meow.mp3']);
+        this.load.audio('purrSound', ['../../videos/sounds/purr.mp3']);
 
         this.load.video('sta.alive_a', '../../videos/abyssinian/sta.alive_a.webm', true);
         this.load.video('sta.alive_b', '../../videos/abyssinian/sta.alive_b.webm', true);
@@ -121,6 +123,7 @@ class Pet extends Phaser.Scene
         const mouse = ['sta.mouse_catch_a', 'sta.mouse_catch_b', 'sta.mouse_catch_c', 'sta.mouse_miss_a', 'sta.mouse_miss_b', 'sta.mouse_miss_c']
 
         const pet = this.add.video(374, 165, 'sta.breathe').setOrigin(.5, .5);
+        const meowSound = this.sound.add('meowSound');
         let action = false
         let currentAction = 'none'
         let currentVid = 'sta.breathe'
@@ -302,7 +305,7 @@ class Pet extends Phaser.Scene
             } 
             else if (pet.getVideoKey().startsWith('slp')) {
                 let rand = randomIntFromInterval(0, 99)
-                if (rand < 90) {
+                if (rand < 95) {
                     nextVid = `slp.breathe`;
                 } else {
                     nextVid = `${slpMov[randomIntFromInterval(0, slpMov.length-1)]}`;
@@ -312,6 +315,9 @@ class Pet extends Phaser.Scene
             if (nextVid !== currentVid) {
                 pet.changeSource(nextVid, true, false);
                 currentVid = nextVid
+            }
+            if (nextVid.includes('meow')) {
+                meowSound.play()
             }
             pet.play()
         }
