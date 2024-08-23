@@ -1,6 +1,3 @@
-// let pet
-// let staIdle
-
 class Pet extends Phaser.Scene
 {
     constructor ()
@@ -18,16 +15,13 @@ class Pet extends Phaser.Scene
             progressBar.fillStyle(0x35a3d5, 1);
             progressBar.fillRect(389, 337, 100 * value, 6);
         });    
-        let background = this.add.image(374, 165, 'card_back').setOrigin(.5, .5);  
+        let background = this.add.image(374, 165, 'bg').setOrigin(.5, .5);  
 
         this.add.graphics().fillStyle(0x000000).fillRect(386, 334, 116, 12);
         const progressBar = this.add.graphics();
             
         // Load in images and sounds
-        // this.load.image('stable_bg', './images/landStable/stable-bg.png');
-        // this.load.atlas('shovel', './images/landStable/shovel.png', './images/landStable/shovel.json');
-        // this.load.spineAtlas("horse-atlas", `./images/horses/${horseName}/skeleton.atlas`);
-        // this.load.spritesheet('hooves', './images/landStable/hooves.png', { frameWidth: 53, frameHeight: 53 });
+        // this.load.atlas('petSprite', '../../videos/abyssinian/spritesheet.png', '../../videos/abyssinian/sprites.json');
         // this.load.audio('background_music', ['./sounds/stable_soundtrack.mp3']);
 
         this.load.video('sta.alive_a', '../../videos/abyssinian/sta.alive_a.webm', true);
@@ -108,15 +102,6 @@ class Pet extends Phaser.Scene
     create ()
     {
         //  If you disable topOnly it will fire events for all objects the pointer is over, regardless of place on the display list
-        // this.input.topOnly = true;
-
-        // const backgroundMusic = this.sound.add('background_music');
-        // backgroundMusic.loop = true; 
-        // backgroundMusic.play();
-
-        // this.add.image(444, 261, 'stable_bg');
-
-        // const hover1 = this.sound.add('hover1');
 
         const staIdle = ['alive_a', 'alive_b', 'alive_c', 'meow', 'sniffscreen']
         const closIdle = ['lickscreen_a', 'lickscreen_b', 'meow']
@@ -138,6 +123,7 @@ class Pet extends Phaser.Scene
         const pet = this.add.video(374, 165, 'sta.breathe').setOrigin(.5, .5);
         let action = false
         let currentAction = 'none'
+        let currentVid = 'sta.breathe'
 
         pet.on('complete',switchVideo);
         pet.play()
@@ -176,146 +162,157 @@ class Pet extends Phaser.Scene
         });
 
         function giveFood() {
-            if (pet.getVideoKey().startsWith('sta')) {pet.changeSource(`situp.fromsta`, true, false);}
-            else if (pet.getVideoKey().startsWith('clos')) {pet.changeSource(`sta.fromclos`, true, false);}
-            else if (pet.getVideoKey().startsWith('situp')) {pet.changeSource(`foodin`, true, false);} // start feeding
-            else if (pet.getVideoKey().startsWith('sitdwn')) {pet.changeSource(`situp.fromsitdwn`, true, false);}
-            else if (pet.getVideoKey().startsWith('sit')) {pet.changeSource(`situp.fromsit`, true, false);}
-            else if (pet.getVideoKey().startsWith('lay')) {pet.changeSource(`situp.fromlay`, true, false);}
-            else if (pet.getVideoKey().startsWith('slp')) {pet.changeSource(`lay.fromslp`, true, false);}
+            let nextVid = null
+            if (pet.getVideoKey().startsWith('sta')) {nextVid = `situp.fromsta`;}
+            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`;}
+            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `foodin`;} // start feeding
+            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `situp.fromsitdwn`;}
+            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `situp.fromsit`;}
+            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `situp.fromlay`;}
+            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`;}
             else if (pet.getVideoKey().startsWith('eating_main')) {
                 action = false
                 currentAction = 'none'
-                pet.changeSource(`sta.foodout`, true, false);
+                nextVid = `sta.foodout`;
             }
             else if (pet.getVideoKey().startsWith('foodin') || pet.getVideoKey().startsWith('eating')) {
-                pet.changeSource(`${eating[randomIntFromInterval(0, eating.length-1)]}`, true, false);
+                nextVid = `${eating[randomIntFromInterval(0, eating.length-1)]}`;
             }
+            return nextVid
         }
 
         function giveWater() {
-            if (pet.getVideoKey().startsWith('sta')) {pet.changeSource(`situp.fromsta`, true, false);}
-            else if (pet.getVideoKey().startsWith('clos')) {pet.changeSource(`sta.fromclos`, true, false);}
-            else if (pet.getVideoKey().startsWith('situp')) {pet.changeSource(`waterin`, true, false);} // start drinking
-            else if (pet.getVideoKey().startsWith('sitdwn')) {pet.changeSource(`situp.fromsitdwn`, true, false);}
-            else if (pet.getVideoKey().startsWith('sit')) {pet.changeSource(`situp.fromsit`, true, false);}
-            else if (pet.getVideoKey().startsWith('lay')) {pet.changeSource(`situp.fromlay`, true, false);}
-            else if (pet.getVideoKey().startsWith('slp')) {pet.changeSource(`lay.fromslp`, true, false);}
+            let nextVid = null
+            if (pet.getVideoKey().startsWith('sta')) {nextVid = `situp.fromsta`;}
+            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`;}
+            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `waterin`;} // start drinking
+            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `situp.fromsitdwn`;}
+            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `situp.fromsit`;}
+            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `situp.fromlay`;}
+            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`;}
             else if (pet.getVideoKey().startsWith('waterin')) {
-                    pet.changeSource(`drinking`, true, false);
+                    nextVid = `drinking`;
             }
             else if (pet.getVideoKey().startsWith('drinking')) {
                 action = false
                 currentAction = 'none'
-                pet.changeSource(`sta.waterout`, true, false);
+                nextVid = `sta.waterout`;
             }
+            return nextVid
         }
 
         function giveMouse() {
+            let nextVid = null
             if (pet.getVideoKey().startsWith('sta')) {
                 action = false
                 currentAction = 'none'
-                pet.changeSource(`${mouse[randomIntFromInterval(0, mouse.length-1)]}`, true, false);
+                nextVid = `${mouse[randomIntFromInterval(0, mouse.length-1)]}`;
             }
-            else if (pet.getVideoKey().startsWith('clos')) {pet.changeSource(`sta.fromclos`, true, false);}
-            else if (pet.getVideoKey().startsWith('situp')) {pet.changeSource(`sta.fromsitup`, true, false);}
-            else if (pet.getVideoKey().startsWith('sitdwn')) {pet.changeSource(`sta.fromsitdwn`, true, false);}
-            else if (pet.getVideoKey().startsWith('sit')) {pet.changeSource(`sta.fromsit`, true, false);}
-            else if (pet.getVideoKey().startsWith('lay')) {pet.changeSource(`sta.fromlay`, true, false);}
-            else if (pet.getVideoKey().startsWith('slp')) {pet.changeSource(`lay.fromslp`, true, false);}
+            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`;}
+            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`;}
+            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `sta.fromsitdwn`;}
+            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`;}
+            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`;}
+            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`;}
+            return nextVid
         }
 
         function switchVideo() {
+            let nextVid = null
             if (action) {
                 switch (currentAction) {
                     case 'feed':
-                        giveFood()
+                        nextVid = giveFood()
                         break;
                     case 'water':
-                        giveWater()
+                        nextVid = giveWater()
                         break;
                     case 'mouse':
-                        giveMouse()
+                        nextVid = giveMouse()
                         break;
                 
                     default:
                         action = false
                         break;
                 }
-                console.log(action)
             }
             else if (pet.getVideoKey().startsWith('sta')) {
                 let rand = randomIntFromInterval(0, 99)
                 if (rand < 10) {
-                    pet.changeSource(`sta.blink`, true, false);
+                    nextVid = `sta.blink`;
                 } else if (rand < 70) {
-                    pet.changeSource(`sta.breathe`, true, false);
+                    nextVid = `sta.breathe`;
                 } else if (rand < 85) {
-                    pet.changeSource(`sta.${staIdle[randomIntFromInterval(0, staIdle.length-1)]}`, true, false);
+                    nextVid = `sta.${staIdle[randomIntFromInterval(0, staIdle.length-1)]}`;
                 } else {
-                    pet.changeSource(`${staMov[randomIntFromInterval(0, staMov.length-1)]}`, true, false);
+                    nextVid = `${staMov[randomIntFromInterval(0, staMov.length-1)]}`;
                 }
             } 
             else if (pet.getVideoKey().startsWith('clos')) {
                 let rand = randomIntFromInterval(0, 99)
                 if (rand < 10) {
-                    pet.changeSource(`clos.blink`, true, false);
+                    nextVid = `clos.blink`;
                 } else if (rand < 70) {
-                    pet.changeSource(`clos.breathe`, true, false);
+                    nextVid = `clos.breathe`;
                 } else if (rand < 85) {
-                    pet.changeSource(`clos.${closIdle[randomIntFromInterval(0, closIdle.length-1)]}`, true, false);
+                    nextVid = `clos.${closIdle[randomIntFromInterval(0, closIdle.length-1)]}`;
                 } else {
-                    pet.changeSource(`${closMov[randomIntFromInterval(0, closMov.length-1)]}`, true, false);
+                    nextVid = `${closMov[randomIntFromInterval(0, closMov.length-1)]}`;
                 }
             } 
             else if (pet.getVideoKey().startsWith('situp')) {
                 let rand = randomIntFromInterval(0, 99)
                 if (rand < 10) {
-                    pet.changeSource(`situp.blink`, true, false);
+                    nextVid = `situp.blink`;
                 } else if (rand < 70) {
-                    pet.changeSource(`situp.breathe`, true, false);
+                    nextVid = `situp.breathe`;
                 } else if (rand < 85) {
-                    pet.changeSource(`situp.${situpIdle[randomIntFromInterval(0, situpIdle.length-1)]}`, true, false);
+                    nextVid = `situp.${situpIdle[randomIntFromInterval(0, situpIdle.length-1)]}`;
                 } else {
-                    pet.changeSource(`${situpMov[randomIntFromInterval(0, situpMov.length-1)]}`, true, false);
+                    nextVid = `${situpMov[randomIntFromInterval(0, situpMov.length-1)]}`;
                 }
             } 
             else if (pet.getVideoKey().startsWith('sitdwn')) {
                 let rand = randomIntFromInterval(0, 99)
                 if (rand < 80) {
-                    pet.changeSource(`lay.fromsitdwn`, true, false);
+                    nextVid = `lay.fromsitdwn`;
                 } else {
-                    pet.changeSource(`${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`, true, false);
+                    nextVid = `${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`;
                 }
             } 
             else if (pet.getVideoKey().startsWith('sit')) {
                 let rand = randomIntFromInterval(0, 99)
                 if (rand < 60) {
-                    pet.changeSource(`sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`, true, false);
+                    nextVid = `sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`;
                 } else {
-                    pet.changeSource(`${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`, true, false);
+                    nextVid = `${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`;
                 }
             } 
             else if (pet.getVideoKey().startsWith('lay')) {
                 let rand = randomIntFromInterval(0, 99)
                 if (rand < 10) {
-                    pet.changeSource(`lay.blink`, true, false);
+                    nextVid = `lay.blink`;
                 } else if (rand < 70) {
-                    pet.changeSource(`lay.breathe`, true, false);
+                    nextVid = `lay.breathe`;
                 } else if (rand < 85) {
-                    pet.changeSource(`lay.${layIdle[randomIntFromInterval(0, layIdle.length-1)]}`, true, false);
+                    nextVid = `lay.${layIdle[randomIntFromInterval(0, layIdle.length-1)]}`;
                 } else {
-                    pet.changeSource(`${layMov[randomIntFromInterval(0, layMov.length-1)]}`, true, false);
+                    nextVid = `${layMov[randomIntFromInterval(0, layMov.length-1)]}`;
                 }
             } 
             else if (pet.getVideoKey().startsWith('slp')) {
                 let rand = randomIntFromInterval(0, 99)
                 if (rand < 90) {
-                    pet.changeSource(`slp.breathe`, true, false);
+                    nextVid = `slp.breathe`;
                 } else {
-                    pet.changeSource(`${slpMov[randomIntFromInterval(0, slpMov.length-1)]}`, true, false);
+                    nextVid = `${slpMov[randomIntFromInterval(0, slpMov.length-1)]}`;
                 }
             } 
+
+            if (nextVid !== currentVid) {
+                pet.changeSource(nextVid, true, false);
+                currentVid = nextVid
+            }
             pet.play()
         }
 
