@@ -143,7 +143,7 @@ class Pet extends Phaser.Scene
         pet.play()
 
         const mouseButton = this.add.text(299, 300, 'Mouse', { fill: '#000' }).setOrigin(.5, .5);
-        mouseButton.setInteractive();
+        mouseButton.setInteractive({ useHandCursor: true });
         mouseButton.on('pointerover', () => { if (!action) {mouseButton.setStyle({ fill: '#fff'}); }});
         mouseButton.on('pointerout', () => { mouseButton.setStyle({ fill: '#000'}); });
         mouseButton.on('pointerdown', () => {
@@ -154,7 +154,7 @@ class Pet extends Phaser.Scene
         });
 
         const waterButton = this.add.text(374, 300, 'Water', { fill: '#000' }).setOrigin(.5, .5);
-        waterButton.setInteractive();
+        waterButton.setInteractive({ useHandCursor: true });
         waterButton.on('pointerover', () => { if (!action) {waterButton.setStyle({ fill: '#fff'}); }});
         waterButton.on('pointerout', () => { waterButton.setStyle({ fill: '#000'}); });
         waterButton.on('pointerdown', () => {
@@ -165,7 +165,7 @@ class Pet extends Phaser.Scene
         });
 
         const foodButton = this.add.text(449, 300, 'Food', { fill: '#000' }).setOrigin(.5, .5);
-        foodButton.setInteractive();
+        foodButton.setInteractive({ useHandCursor: true });
         foodButton.on('pointerover', () => { if (!action) {foodButton.setStyle({ fill: '#fff'}); }});
         foodButton.on('pointerout', () => { foodButton.setStyle({ fill: '#000'}); });
         foodButton.on('pointerdown',  () => {
