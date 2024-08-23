@@ -23,10 +23,15 @@
   <div id="page">
     <div id="content">
   
-      <h1>Pet Demo</h1>
+      <h1>Pet Archives</h1>
       
       <div id="gameDiv" style="padding-top: 10px; padding-bottom: 10px; text-align: center;">
         <script type="text/javascript">
+                
+            // Gets info about the pet from data.json file
+            const searchQueryString = window.location.search;
+            const urlParameters = new URLSearchParams(searchQueryString);
+            let petType = urlParameters.get('pet')
 
             let config = {
                 parent: "gameDiv",
@@ -49,6 +54,15 @@
 
         </script>
       </div>
+      <br>
+
+      Note: This is a VERY rough start at trying to display the archived FooPets pet videos. 
+      So far it just includes some of the files for the abyssinian cat (which didn't have sound in the original video files)
+      and there is currently an issue where the videos flash when switching and sometimes stop when switching to a different tab or window.
+      The videos also may not display the transparency correctly on certain browsers.
+      <br>
+      <br>
+      That said, this is just the start and more videos and pets have been archived and can hopefully be added soon.
       
         
       <div style="clear:both"></div>

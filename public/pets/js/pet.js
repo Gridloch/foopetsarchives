@@ -151,6 +151,7 @@ class Pet extends Phaser.Scene
                 action = true
                 currentAction = 'mouse'
             }
+            if (!pet.isPlaying) {switchVideo()}
         });
 
         const waterButton = this.add.text(374, 300, 'Water', { fill: '#000' }).setOrigin(.5, .5);
@@ -162,6 +163,7 @@ class Pet extends Phaser.Scene
                 action = true
                 currentAction = 'water'
             }
+            if (!pet.isPlaying) {switchVideo()}
         });
 
         const foodButton = this.add.text(449, 300, 'Food', { fill: '#000' }).setOrigin(.5, .5);
@@ -173,6 +175,7 @@ class Pet extends Phaser.Scene
                 action = true
                 currentAction = 'feed'
             }
+            if (!pet.isPlaying) {switchVideo()}
         });
 
         function giveFood() {
