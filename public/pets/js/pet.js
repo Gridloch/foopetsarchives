@@ -30,79 +30,79 @@ class Pet extends Phaser.Scene
         // this.load.spritesheet('hooves', './images/landStable/hooves.png', { frameWidth: 53, frameHeight: 53 });
         // this.load.audio('background_music', ['./sounds/stable_soundtrack.mp3']);
 
-        this.load.video('sta.alive_a', '../../videos/abyssinian/sta.alive_a.webm');
-        this.load.video('sta.alive_b', '../../videos/abyssinian/sta.alive_b.webm');
-        this.load.video('sta.alive_c', '../../videos/abyssinian/sta.alive_c.webm');
-        this.load.video('sta.blink', '../../videos/abyssinian/sta.blink.webm');
-        this.load.video('sta.breathe', '../../videos/abyssinian/sta.breathe.webm');
-        this.load.video('sta.meow', '../../videos/abyssinian/sta.meow.webm');
-        this.load.video('sta.sniffscreen', '../../videos/abyssinian/sta.sniffscreen.webm');
-        this.load.video('sta.fromclos', '../../videos/abyssinian/clos.clostosta.webm');
-        this.load.video('sta.fromsitup', '../../videos/abyssinian/mov.situptosta.webm');
-        this.load.video('sta.fromsit', '../../videos/abyssinian/mov.sittosta.webm');
-        this.load.video('sta.fromsitdwn', '../../videos/abyssinian/mov.sitdwntosta.webm');
-        this.load.video('sta.fromlay', '../../videos/abyssinian/mov.laytosta.webm');
+        this.load.video('sta.alive_a', '../../videos/abyssinian/sta.alive_a.webm', true);
+        this.load.video('sta.alive_b', '../../videos/abyssinian/sta.alive_b.webm', true);
+        this.load.video('sta.alive_c', '../../videos/abyssinian/sta.alive_c.webm', true);
+        this.load.video('sta.blink', '../../videos/abyssinian/sta.blink.webm', true);
+        this.load.video('sta.breathe', '../../videos/abyssinian/sta.breathe.webm', true);
+        this.load.video('sta.meow', '../../videos/abyssinian/sta.meow.webm', true);
+        this.load.video('sta.sniffscreen', '../../videos/abyssinian/sta.sniffscreen.webm', true);
+        this.load.video('sta.fromclos', '../../videos/abyssinian/clos.clostosta.webm', true);
+        this.load.video('sta.fromsitup', '../../videos/abyssinian/mov.situptosta.webm', true);
+        this.load.video('sta.fromsit', '../../videos/abyssinian/mov.sittosta.webm', true);
+        this.load.video('sta.fromsitdwn', '../../videos/abyssinian/mov.sitdwntosta.webm', true);
+        this.load.video('sta.fromlay', '../../videos/abyssinian/mov.laytosta.webm', true);
 
-        this.load.video('clos.blink', '../../videos/abyssinian/clos.blink.webm');
-        this.load.video('clos.breathe', '../../videos/abyssinian/clos.breathe.webm');
-        this.load.video('clos.lickscreen_a', '../../videos/abyssinian/clos.lickscreen_a.webm');
-        this.load.video('clos.lickscreen_b', '../../videos/abyssinian/clos.lickscreen_b.webm');
-        this.load.video('clos.meow', '../../videos/abyssinian/clos.meow.webm');
-        this.load.video('clos.fromsta', '../../videos/abyssinian/clos.statoclos.webm');
+        this.load.video('clos.blink', '../../videos/abyssinian/clos.blink.webm', true);
+        this.load.video('clos.breathe', '../../videos/abyssinian/clos.breathe.webm', true);
+        this.load.video('clos.lickscreen_a', '../../videos/abyssinian/clos.lickscreen_a.webm', true);
+        this.load.video('clos.lickscreen_b', '../../videos/abyssinian/clos.lickscreen_b.webm', true);
+        this.load.video('clos.meow', '../../videos/abyssinian/clos.meow.webm', true);
+        this.load.video('clos.fromsta', '../../videos/abyssinian/clos.statoclos.webm', true);
         
-        this.load.video('situp.alive_a', '../../videos/abyssinian/situp.alive_a.webm');
-        this.load.video('situp.alive_b', '../../videos/abyssinian/situp.alive_b.webm');
-        this.load.video('situp.alive_c', '../../videos/abyssinian/situp.alive_c.webm');
-        this.load.video('situp.blink', '../../videos/abyssinian/situp.blink.webm');
-        this.load.video('situp.breathe', '../../videos/abyssinian/situp.breathe.webm');
-        this.load.video('situp.meow', '../../videos/abyssinian/situp.meow.webm');
-        this.load.video('situp.lickpaw', '../../videos/abyssinian/situp.lickpaw.webm');
-        this.load.video('situp.fromsta', '../../videos/abyssinian/mov.statositup.webm');
-        this.load.video('situp.fromsit', '../../videos/abyssinian/mov.sittositup.webm');
-        this.load.video('situp.fromsitdwn', '../../videos/abyssinian/mov.sitdwntositup.webm');
-        this.load.video('situp.fromlay', '../../videos/abyssinian/mov.laytositup.webm');
+        this.load.video('situp.alive_a', '../../videos/abyssinian/situp.alive_a.webm', true);
+        this.load.video('situp.alive_b', '../../videos/abyssinian/situp.alive_b.webm', true);
+        this.load.video('situp.alive_c', '../../videos/abyssinian/situp.alive_c.webm', true);
+        this.load.video('situp.blink', '../../videos/abyssinian/situp.blink.webm', true);
+        this.load.video('situp.breathe', '../../videos/abyssinian/situp.breathe.webm', true);
+        this.load.video('situp.meow', '../../videos/abyssinian/situp.meow.webm', true);
+        this.load.video('situp.lickpaw', '../../videos/abyssinian/situp.lickpaw.webm', true);
+        this.load.video('situp.fromsta', '../../videos/abyssinian/mov.statositup.webm', true);
+        this.load.video('situp.fromsit', '../../videos/abyssinian/mov.sittositup.webm', true);
+        this.load.video('situp.fromsitdwn', '../../videos/abyssinian/mov.sitdwntositup.webm', true);
+        this.load.video('situp.fromlay', '../../videos/abyssinian/mov.laytositup.webm', true);
         
-        this.load.video('sit.alive_a', '../../videos/abyssinian/sit.alive_a.webm');
-        this.load.video('sit.alive_b', '../../videos/abyssinian/sit.alive_b.webm');
-        this.load.video('sit.alive_c', '../../videos/abyssinian/sit.alive_c.webm');
-        this.load.video('sit.fromsta', '../../videos/abyssinian/mov.statosit.webm');
-        this.load.video('sit.fromsitup', '../../videos/abyssinian/mov.situptosit.webm');
-        this.load.video('sit.fromsitdwn', '../../videos/abyssinian/mov.sitdwntosit.webm');
+        this.load.video('sit.alive_a', '../../videos/abyssinian/sit.alive_a.webm', true);
+        this.load.video('sit.alive_b', '../../videos/abyssinian/sit.alive_b.webm', true);
+        this.load.video('sit.alive_c', '../../videos/abyssinian/sit.alive_c.webm', true);
+        this.load.video('sit.fromsta', '../../videos/abyssinian/mov.statosit.webm', true);
+        this.load.video('sit.fromsitup', '../../videos/abyssinian/mov.situptosit.webm', true);
+        this.load.video('sit.fromsitdwn', '../../videos/abyssinian/mov.sitdwntosit.webm', true);
         
-        this.load.video('sitdwn.fromsta', '../../videos/abyssinian/mov.statositdwn.webm');
-        this.load.video('sitdwn.fromsitup', '../../videos/abyssinian/mov.situptositdwn.webm');
-        this.load.video('sitdwn.fromsit', '../../videos/abyssinian/mov.sittositdwn.webm');
-        this.load.video('sitdwn.fromlay', '../../videos/abyssinian/mov.laytositdwn.webm');
+        this.load.video('sitdwn.fromsta', '../../videos/abyssinian/mov.statositdwn.webm', true);
+        this.load.video('sitdwn.fromsitup', '../../videos/abyssinian/mov.situptositdwn.webm', true);
+        this.load.video('sitdwn.fromsit', '../../videos/abyssinian/mov.sittositdwn.webm', true);
+        this.load.video('sitdwn.fromlay', '../../videos/abyssinian/mov.laytositdwn.webm', true);
         
-        this.load.video('lay.alive_a', '../../videos/abyssinian/lay.alive_a.webm');
-        this.load.video('lay.alive_b', '../../videos/abyssinian/lay.alive_b.webm');
-        this.load.video('lay.alive_c', '../../videos/abyssinian/lay.alive_c.webm');
-        this.load.video('lay.blink', '../../videos/abyssinian/lay.blink.webm');
-        this.load.video('lay.breathe', '../../videos/abyssinian/lay.breathe.webm');
-        this.load.video('lay.meow', '../../videos/abyssinian/lay.meow.webm');
-        this.load.video('lay.lickbelly', '../../videos/abyssinian/lay.lickbelly.webm');
-        this.load.video('lay.fromsitdwn', '../../videos/abyssinian/mov.sitdwntolay.webm');
-        this.load.video('lay.fromslp', '../../videos/abyssinian/mov.slptolay.webm');
+        this.load.video('lay.alive_a', '../../videos/abyssinian/lay.alive_a.webm', true);
+        this.load.video('lay.alive_b', '../../videos/abyssinian/lay.alive_b.webm', true);
+        this.load.video('lay.alive_c', '../../videos/abyssinian/lay.alive_c.webm', true);
+        this.load.video('lay.blink', '../../videos/abyssinian/lay.blink.webm', true);
+        this.load.video('lay.breathe', '../../videos/abyssinian/lay.breathe.webm', true);
+        this.load.video('lay.meow', '../../videos/abyssinian/lay.meow.webm', true);
+        this.load.video('lay.lickbelly', '../../videos/abyssinian/lay.lickbelly.webm', true);
+        this.load.video('lay.fromsitdwn', '../../videos/abyssinian/mov.sitdwntolay.webm', true);
+        this.load.video('lay.fromslp', '../../videos/abyssinian/mov.slptolay.webm', true);
 
-        this.load.video('slp.breathe', '../../videos/abyssinian/slp.breathe.webm');
-        this.load.video('slp.fromlay', '../../videos/abyssinian/mov.laytoslp.webm');
+        this.load.video('slp.breathe', '../../videos/abyssinian/slp.breathe.webm', true);
+        this.load.video('slp.fromlay', '../../videos/abyssinian/mov.laytoslp.webm', true);
 
-        this.load.video('foodin', '../../videos/abyssinian/situp.eat._in.webm');
-        this.load.video('eating_a', '../../videos/abyssinian/sitdwn.eat.a.webm');
-        this.load.video('eating_b', '../../videos/abyssinian/sitdwn.eat.b.webm');
-        this.load.video('eating_main', '../../videos/abyssinian/sitdwn.eat.main.webm');
-        this.load.video('sta.foodout', '../../videos/abyssinian/sta.eat._out.webm');
+        this.load.video('foodin', '../../videos/abyssinian/situp.eat._in.webm', true);
+        this.load.video('eating_a', '../../videos/abyssinian/sitdwn.eat.a.webm', true);
+        this.load.video('eating_b', '../../videos/abyssinian/sitdwn.eat.b.webm', true);
+        this.load.video('eating_main', '../../videos/abyssinian/sitdwn.eat.main.webm', true);
+        this.load.video('sta.foodout', '../../videos/abyssinian/sta.eat._out.webm', true);
 
-        this.load.video('waterin', '../../videos/abyssinian/situp.drink._in.webm');
-        this.load.video('drinking', '../../videos/abyssinian/sitdwn.drink.webm');
-        this.load.video('sta.waterout', '../../videos/abyssinian/sta.drink._out.webm');
+        this.load.video('waterin', '../../videos/abyssinian/situp.drink._in.webm', true);
+        this.load.video('drinking', '../../videos/abyssinian/sitdwn.drink.webm', true);
+        this.load.video('sta.waterout', '../../videos/abyssinian/sta.drink._out.webm', true);
         
-        this.load.video('sta.mouse_catch_a', '../../videos/abyssinian/sta.mouse_catch_a.webm');
-        this.load.video('sta.mouse_catch_b', '../../videos/abyssinian/sta.mouse_catch_b.webm');
-        this.load.video('sta.mouse_catch_c', '../../videos/abyssinian/sta.mouse_catch_c.webm');
-        this.load.video('sta.mouse_miss_a', '../../videos/abyssinian/sta.mouse_miss_a.webm');
-        this.load.video('sta.mouse_miss_b', '../../videos/abyssinian/sta.mouse_miss_b.webm');
-        this.load.video('sta.mouse_miss_c', '../../videos/abyssinian/sta.mouse_miss_c.webm');
+        this.load.video('sta.mouse_catch_a', '../../videos/abyssinian/sta.mouse_catch_a.webm', true);
+        this.load.video('sta.mouse_catch_b', '../../videos/abyssinian/sta.mouse_catch_b.webm', true);
+        this.load.video('sta.mouse_catch_c', '../../videos/abyssinian/sta.mouse_catch_c.webm', true);
+        this.load.video('sta.mouse_miss_a', '../../videos/abyssinian/sta.mouse_miss_a.webm', true);
+        this.load.video('sta.mouse_miss_b', '../../videos/abyssinian/sta.mouse_miss_b.webm', true);
+        this.load.video('sta.mouse_miss_c', '../../videos/abyssinian/sta.mouse_miss_c.webm', true);
     }
 
     create ()
@@ -151,7 +151,6 @@ class Pet extends Phaser.Scene
                 action = true
                 currentAction = 'mouse'
             }
-            if (!pet.isPlaying) {switchVideo()}
         });
 
         const waterButton = this.add.text(374, 300, 'Water', { fill: '#000' }).setOrigin(.5, .5);
@@ -163,7 +162,6 @@ class Pet extends Phaser.Scene
                 action = true
                 currentAction = 'water'
             }
-            if (!pet.isPlaying) {switchVideo()}
         });
 
         const foodButton = this.add.text(449, 300, 'Food', { fill: '#000' }).setOrigin(.5, .5);
@@ -175,7 +173,6 @@ class Pet extends Phaser.Scene
                 action = true
                 currentAction = 'feed'
             }
-            if (!pet.isPlaying) {switchVideo()}
         });
 
         function giveFood() {
