@@ -457,7 +457,7 @@ class Pet extends Phaser.Scene
 
     update ()
     {
-        if (pet.getProgress() > 0.000001) {
+        if (pet.getProgress() > 0.01) {
             petSprite.setVisible(false);
         }
     }
