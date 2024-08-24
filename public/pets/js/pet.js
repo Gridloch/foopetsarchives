@@ -36,6 +36,30 @@ class Pet extends Phaser.Scene
         this.load.video('sta.breathe', '../../videos/abyssinian/sta.breathe.webm', true);
         this.load.video('sta.meow', '../../videos/abyssinian/sta.meow.webm', true);
         this.load.video('sta.sniffscreen', '../../videos/abyssinian/sta.sniffscreen.webm', true);
+        this.load.video('sta.aggression._in', '../../videos/abyssinian/sta.aggression._in.webm', true);
+        this.load.video('sta.aggression._out', '../../videos/abyssinian/sta.aggression._out.webm', true);
+        this.load.video('sta.aggression.main', '../../videos/abyssinian/sta.aggression.main.webm', true);
+        this.load.video('sta.backscratch._in', '../../videos/abyssinian/sta.backscratch._in.webm', true);
+        this.load.video('sta.backscratch._out', '../../videos/abyssinian/sta.backscratch._out.webm', true);
+        this.load.video('sta.backscratch.main', '../../videos/abyssinian/sta.backscratch.main.webm', true);
+        this.load.video('sta.buttscratch._in', '../../videos/abyssinian/sta.buttscratch._in.webm', true);
+        this.load.video('sta.buttscratch._out', '../../videos/abyssinian/sta.buttscratch._out.webm', true);
+        this.load.video('sta.buttscratch.main', '../../videos/abyssinian/sta.buttscratch.main.webm', true);
+        this.load.video('sta.headscratch._in', '../../videos/abyssinian/sta.headscratch._in.webm', true);
+        this.load.video('sta.headscratch._out', '../../videos/abyssinian/sta.headscratch._out.webm', true);
+        this.load.video('sta.headscratch.main', '../../videos/abyssinian/sta.headscratch.main.webm', true);
+        this.load.video('sta.neckscratch._in', '../../videos/abyssinian/sta.neckscratch._in.webm', true);
+        this.load.video('sta.neckscratch._out', '../../videos/abyssinian/sta.neckscratch._out.webm', true);
+        this.load.video('sta.neckscratch.main', '../../videos/abyssinian/sta.neckscratch.main.webm', true);
+        this.load.video('sta.scruff_a._out', '../../videos/abyssinian/sta.scruff_a._out.webm', true);
+        this.load.video('sta.scruff_a.main', '../../videos/abyssinian/sta.scruff_a.main.webm', true);
+        this.load.video('sta.walk_l._in', '../../videos/abyssinian/sta.walk_l._in.webm', true);
+        this.load.video('sta.walk_l._out', '../../videos/abyssinian/sta.walk_l._out.webm', true);
+        this.load.video('sta.walk_l.main', '../../videos/abyssinian/sta.walk_l.main.webm', true);
+        this.load.video('sta.walk_r._in', '../../videos/abyssinian/sta.walk_r._in.webm', true);
+        this.load.video('sta.walk_r._out', '../../videos/abyssinian/sta.walk_r._out.webm', true);
+        this.load.video('sta.walk_r.main', '../../videos/abyssinian/sta.walk_r.main.webm', true);
+        // this.load.video('sta.pooping.main', '../../videos/abyssinian/sta.pooping.main.webm', true);
         this.load.video('sta.fromclos', '../../videos/abyssinian/clos.clostosta.webm', true);
         this.load.video('sta.fromsitup', '../../videos/abyssinian/mov.situptosta.webm', true);
         this.load.video('sta.fromsit', '../../videos/abyssinian/mov.sittosta.webm', true);
@@ -62,6 +86,14 @@ class Pet extends Phaser.Scene
         this.load.video('situp.breathe', '../../videos/abyssinian/situp.breathe.webm', true);
         this.load.video('situp.meow', '../../videos/abyssinian/situp.meow.webm', true);
         this.load.video('situp.lickpaw', '../../videos/abyssinian/situp.lickpaw.webm', true);
+        this.load.video('situp.headscratch._in', '../../videos/abyssinian/lay.situp._in.webm', true);
+        this.load.video('situp.headscratch._out', '../../videos/abyssinian/lay.situp._out.webm', true);
+        this.load.video('situp.headscratch.main', '../../videos/abyssinian/lay.situp.main.webm', true);
+        this.load.video('situp.neckscratch._in', '../../videos/abyssinian/situp.neckscratch._in.webm', true);
+        this.load.video('situp.neckscratch._out', '../../videos/abyssinian/situp.neckscratch._out.webm', true);
+        this.load.video('situp.neckscratch.main', '../../videos/abyssinian/situp.neckscratch.main.webm', true);
+        // this.load.video('situp.bowl', '../../videos/abyssinian/situp._bwl.webm', true);
+        // this.load.video('situp.meowbowl', '../../videos/abyssinian/situp.meowbwl.webm', true);
         this.load.video('situp.fromsta', '../../videos/abyssinian/mov.statositup.webm', true);
         this.load.video('situp.fromsit', '../../videos/abyssinian/mov.sittositup.webm', true);
         this.load.video('situp.fromsitdwn', '../../videos/abyssinian/mov.sitdwntositup.webm', true);
@@ -70,6 +102,10 @@ class Pet extends Phaser.Scene
         this.load.video('sit.alive_a', '../../videos/abyssinian/sit.alive_a.webm', true);
         this.load.video('sit.alive_b', '../../videos/abyssinian/sit.alive_b.webm', true);
         this.load.video('sit.alive_c', '../../videos/abyssinian/sit.alive_c.webm', true);
+        this.load.video('sit.headscratch._in', '../../videos/abyssinian/sit.headscratch._in.webm', true);
+        this.load.video('sit.headscratch._out', '../../videos/abyssinian/sit.headscratch._out.webm', true);
+        this.load.video('sit.headscratch.main', '../../videos/abyssinian/sit.headscratch.main.webm', true);
+        // this.load.video('sit.getbowl', '../../videos/abyssinian/sit.getbowl.webm', true);
         this.load.video('sit.fromsta', '../../videos/abyssinian/mov.statosit.webm', true);
         this.load.video('sit.fromsitup', '../../videos/abyssinian/mov.situptosit.webm', true);
         this.load.video('sit.fromsitdwn', '../../videos/abyssinian/mov.sitdwntosit.webm', true);
@@ -86,6 +122,15 @@ class Pet extends Phaser.Scene
         this.load.video('lay.breathe', '../../videos/abyssinian/lay.breathe.webm', true);
         this.load.video('lay.meow', '../../videos/abyssinian/lay.meow.webm', true);
         this.load.video('lay.lickbelly', '../../videos/abyssinian/lay.lickbelly.webm', true);
+        this.load.video('lay.bellyscratch._in', '../../videos/abyssinian/lay.bellyscratch._in.webm', true);
+        this.load.video('lay.bellyscratch._out', '../../videos/abyssinian/lay.bellyscratch._out.webm', true);
+        this.load.video('lay.bellyscratch.main', '../../videos/abyssinian/lay.bellyscratch.main.webm', true);
+        this.load.video('lay.headscratch._in', '../../videos/abyssinian/lay.headscratch._in.webm', true);
+        this.load.video('lay.headscratch._out', '../../videos/abyssinian/lay.headscratch._out.webm', true);
+        this.load.video('lay.headscratch.main', '../../videos/abyssinian/lay.headscratch.main.webm', true);
+        this.load.video('lay.neckscratch._in', '../../videos/abyssinian/lay.neckscratch._in.webm', true);
+        this.load.video('lay.neckscratch._out', '../../videos/abyssinian/lay.neckscratch._out.webm', true);
+        this.load.video('lay.neckscratch.main', '../../videos/abyssinian/lay.neckscratch.main.webm', true);
         this.load.video('lay.fromsitdwn', '../../videos/abyssinian/mov.sitdwntolay.webm', true);
         this.load.video('lay.fromslp', '../../videos/abyssinian/mov.slptolay.webm', true);
 
@@ -143,6 +188,7 @@ class Pet extends Phaser.Scene
         pet.play()
 
         // Petting
+        let keepDragging = true
         let headHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let neckHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let head = this.add.graphics().setInteractive({ hitArea: headHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
@@ -151,16 +197,18 @@ class Pet extends Phaser.Scene
         this.input.setDraggable([head, neck]);
         this.input.dragDistanceThreshold = 32;
 
-        head.on('drag', (pointer, dragX, dragY) => {petInteraction(dragX, dragY, 'Head')});
-        head.on('pointerup', () => { currentAction = 'stopPetHead' })
+        head.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Head')});
+        neck.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Neck')});
+        
+        head.on('pointerup', () => { currentAction = 'stopPetHead'; keepDragging = true })
+        neck.on('pointerup', () => { currentAction = 'stopPetNeck'; keepDragging = true })
 
-        neck.on('drag', (pointer, dragX, dragY) => {petInteraction(dragX, dragY, 'Neck')});
-        neck.on('pointerup', () => { currentAction = 'stopPetNeck' })
-
-        function petInteraction(dragX, dragY, location) {
+        function petInteraction(pointer, dragX, dragY, location) {
             if ( Math.abs(dragX) > 100 || Math.abs(dragY) > 40) {
                 currentAction = `stopPet${location}`
-            } else {
+                keepDragging = false
+                setDragState(pointer, 5)
+            } else if (keepDragging) {
                 currentAction = `pet${location}`
                 action = true
             }
@@ -437,6 +485,7 @@ class Pet extends Phaser.Scene
             if (nextVid !== currentVid) {
                 pet.changeSource(nextVid, true, false);
                 currentVid = nextVid
+                // add a counter here to break out of loops?
             }
             if (nextVid.includes('meow')) {
                 meowSound.play()
@@ -457,7 +506,7 @@ class Pet extends Phaser.Scene
 
     update ()
     {
-        if (pet.getProgress() > 0.00001) {
+        if (pet.getProgress() > 0.0000001) {
             petSprite.setVisible(false);
         }
     }
