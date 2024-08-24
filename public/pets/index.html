@@ -9,7 +9,7 @@
     <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
     <script src="//cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script>
     <script src="./js/loadScreen.js"></script> 
-    <script src="./js/pet.js"></script> 
+    <script src="./js/cat.js"></script> 
   </head>
   <body>
   <a name="top"></a>
@@ -31,6 +31,8 @@
             const searchQueryString = window.location.search;
             const urlParameters = new URLSearchParams(searchQueryString);
             let petType = urlParameters.get('pet')
+            let pet
+            let petSprite
 
             let config = {
                 parent: "gameDiv",
@@ -40,7 +42,7 @@
                 backgroundColor: '#110c27',
                 scene: [
                     Load,
-                    Pet
+                    Cat
                 ]
             };
 
@@ -51,7 +53,7 @@
       <br>
 
       Note: This is a VERY rough start at trying to display the archived FooPets pet videos. 
-      So far it just includes some of the files for the abyssinian cat (which didn't have sound in the original video files)
+      So far it just includes some of the files for the <a href="./index.html?pet=abyssinian">abyssinian</a> and <a href="./index.html?pet=bengal">bengal</a> cat (which didn't have sound in the original video files)
       and there is currently an issue where the videos flash when switching and sometimes stop when switching to a different tab or window.
       The videos also may not display the transparency correctly on certain browsers.
       <br>
@@ -59,7 +61,7 @@
       <b>It is also probably not a good idea to have this page open if you are using mobile data!</b>
       <br>
       <br>
-      That said, this is just the start and more videos and pets have been archived and can hopefully be added soon. Another test using spritesheets made from the videos is <a href="./sprites.html">here</a>
+      That said, this is just the start and more videos and pets have been archived and can hopefully be added soon.
 
       
         

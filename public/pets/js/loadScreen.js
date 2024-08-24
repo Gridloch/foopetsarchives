@@ -13,6 +13,10 @@ class Load extends Phaser.Scene
 
     create ()
     { 
-        this.scene.start('pet');
+        console.log(petType)
+        if (petType === null) {
+            petType = 'abyssinian'
+        }
+        this.scene.start('cat');
     }
 }
