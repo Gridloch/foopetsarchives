@@ -1,3 +1,6 @@
+let pet
+let petSprite
+
 class Pet extends Phaser.Scene
 {
     constructor ()
@@ -21,7 +24,7 @@ class Pet extends Phaser.Scene
         const progressBar = this.add.graphics();
             
         // Load in images and sounds
-        // this.load.atlas('petSprite', '../../videos/abyssinian/spritesheet.png', '../../videos/abyssinian/sprites.json');
+        this.load.atlas('petSprite', '../../videos/abyssinian/spritesheet.png', '../../videos/abyssinian/sprites.json');
         // this.load.audio('background_music', ['./sounds/stable_soundtrack.mp3']);
         this.load.audio('meowSound', ['../../videos/sounds/meow.mp3']);
         this.load.audio('purrSound', ['../../videos/sounds/purr.mp3']);
@@ -44,6 +47,12 @@ class Pet extends Phaser.Scene
         this.load.video('clos.lickscreen_a', '../../videos/abyssinian/clos.lickscreen_a.webm', true);
         this.load.video('clos.lickscreen_b', '../../videos/abyssinian/clos.lickscreen_b.webm', true);
         this.load.video('clos.meow', '../../videos/abyssinian/clos.meow.webm', true);
+        this.load.video('clos.headscratch._in', '../../videos/abyssinian/clos.headscratch._in.webm', true);
+        this.load.video('clos.headscratch._out', '../../videos/abyssinian/clos.headscratch._out.webm', true);
+        this.load.video('clos.headscratch.main', '../../videos/abyssinian/clos.headscratch.main.webm', true);
+        this.load.video('clos.neckscratch._in', '../../videos/abyssinian/clos.neckscratch._in.webm', true);
+        this.load.video('clos.neckscratch._out', '../../videos/abyssinian/clos.neckscratch._out.webm', true);
+        this.load.video('clos.neckscratch.main', '../../videos/abyssinian/clos.neckscratch.main.webm', true);
         this.load.video('clos.fromsta', '../../videos/abyssinian/clos.statoclos.webm', true);
         
         this.load.video('situp.alive_a', '../../videos/abyssinian/situp.alive_a.webm', true);
@@ -122,8 +131,10 @@ class Pet extends Phaser.Scene
         const eating = ['eating_a', 'eating_b', 'eating_main', 'eating_main', 'eating_main']
         const mouse = ['sta.mouse_catch_a', 'sta.mouse_catch_b', 'sta.mouse_catch_c', 'sta.mouse_miss_a', 'sta.mouse_miss_b', 'sta.mouse_miss_c']
 
-        const pet = this.add.video(374, 165, 'sta.breathe').setOrigin(.5, .5);
+        petSprite = this.add.sprite(374, 165, 'petSprite', 'sta').setOrigin(.5, .5).setVisible(false);
+        pet = this.add.video(374, 165, 'sta.breathe').setOrigin(.5, .5);
         const meowSound = this.sound.add('meowSound');
+        const purrSound = this.sound.add('purrSound');
         let action = false
         let currentAction = 'none'
         let currentVid = 'sta.breathe'
@@ -131,6 +142,38 @@ class Pet extends Phaser.Scene
         pet.on('complete',switchVideo);
         pet.play()
 
+        // Petting
+        let headHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let neckHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let head = this.add.graphics().setInteractive({ hitArea: headHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let neck = this.add.graphics().setInteractive({ hitArea: neckHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        
+        this.input.setDraggable([head, neck]);
+        this.input.dragDistanceThreshold = 32;
+
+        head.on('drag', (pointer, dragX, dragY) => {petInteraction(dragX, dragY, 'Head')});
+        head.on('pointerup', () => { currentAction = 'stopPetHead' })
+
+        neck.on('drag', (pointer, dragX, dragY) => {petInteraction(dragX, dragY, 'Neck')});
+        neck.on('pointerup', () => { currentAction = 'stopPetNeck' })
+
+        function petInteraction(dragX, dragY, location) {
+            if ( Math.abs(dragX) > 100 || Math.abs(dragY) > 40) {
+                currentAction = `stopPet${location}`
+            } else {
+                currentAction = `pet${location}`
+                action = true
+            }
+        }
+
+        function setHitbox(hitbox, x, y, width, height) {
+            hitbox.x = x
+            hitbox.y = y
+            hitbox.width = height
+            hitbox.height = width
+        }
+
+        // Buttons
         const mouseButton = this.add.text(299, 300, 'Mouse', { fill: '#000' }).setOrigin(.5, .5);
         mouseButton.setInteractive({ useHandCursor: true });
         mouseButton.on('pointerover', () => { if (!action) {mouseButton.setStyle({ fill: '#fff'}); }});
@@ -166,40 +209,44 @@ class Pet extends Phaser.Scene
 
         function giveFood() {
             let nextVid = null
-            if (pet.getVideoKey().startsWith('sta')) {nextVid = `situp.fromsta`;}
-            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`;}
-            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `foodin`;} // start feeding
-            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `situp.fromsitdwn`;}
-            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `situp.fromsit`;}
-            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `situp.fromlay`;}
-            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`;}
+            if (pet.getVideoKey().startsWith('sta')) {nextVid = `situp.fromsta`; petSprite.setFrame('sta')}
+            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
+            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `foodin`; petSprite.setFrame('situp')} // start feeding
+            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `situp.fromsitdwn`; petSprite.setFrame('sitdwn')}
+            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `situp.fromsit`; petSprite.setFrame('sit')}
+            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `situp.fromlay`; petSprite.setFrame('lay')}
+            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
             else if (pet.getVideoKey().startsWith('eating_main')) {
                 action = false
                 currentAction = 'none'
-                nextVid = `sta.foodout`;
+                nextVid = `sta.foodout`
+                petSprite.setFrame('eat')
             }
             else if (pet.getVideoKey().startsWith('foodin') || pet.getVideoKey().startsWith('eating')) {
                 nextVid = `${eating[randomIntFromInterval(0, eating.length-1)]}`;
+                petSprite.setFrame('eat')
             }
             return nextVid
         }
 
         function giveWater() {
             let nextVid = null
-            if (pet.getVideoKey().startsWith('sta')) {nextVid = `situp.fromsta`;}
-            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`;}
-            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `waterin`;} // start drinking
-            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `situp.fromsitdwn`;}
-            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `situp.fromsit`;}
-            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `situp.fromlay`;}
-            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`;}
+            if (pet.getVideoKey().startsWith('sta')) {nextVid = `situp.fromsta`; petSprite.setFrame('sta')}
+            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
+            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `waterin`; petSprite.setFrame('situp')} // start drinking
+            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `situp.fromsitdwn`; petSprite.setFrame('sitdwn')}
+            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `situp.fromsit`; petSprite.setFrame('situp')}
+            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `situp.fromlay`; petSprite.setFrame('lay')}
+            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
             else if (pet.getVideoKey().startsWith('waterin')) {
                     nextVid = `drinking`;
+                    petSprite.setFrame('drink')
             }
             else if (pet.getVideoKey().startsWith('drinking')) {
                 action = false
                 currentAction = 'none'
                 nextVid = `sta.waterout`;
+                petSprite.setFrame('drink')
             }
             return nextVid
         }
@@ -209,14 +256,65 @@ class Pet extends Phaser.Scene
             if (pet.getVideoKey().startsWith('sta')) {
                 action = false
                 currentAction = 'none'
-                nextVid = `${mouse[randomIntFromInterval(0, mouse.length-1)]}`;
+                nextVid = `${mouse[randomIntFromInterval(0, mouse.length-1)]}`; 
+                petSprite.setFrame('sta')
             }
-            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`;}
-            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`;}
-            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `sta.fromsitdwn`;}
-            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`;}
-            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`;}
-            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`;}
+            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
+            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`; petSprite.setFrame('situp')}
+            else if (pet.getVideoKey().startsWith('sitdwn')) {nextVid = `sta.fromsitdwn`; petSprite.setFrame('sitdwn')}
+            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`; petSprite.setFrame('sit')}
+            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`; petSprite.setFrame('lay')}
+            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
+            return nextVid
+        }
+
+        function petHead() {
+            let nextVid = pet.getVideoKey()
+            if (pet.getVideoKey().startsWith('clos')) {
+                if (pet.getVideoKey() === 'clos.headscratch.main' || pet.getVideoKey() === 'clos.headscratch._in') {
+                    nextVid = 'clos.headscratch.main'
+                    petSprite.setFrame('clos.headscratch')
+                    purrSound.play()
+                } else {
+                    nextVid = 'clos.headscratch._in'
+                    petSprite.setFrame('clos')
+                }
+            }
+            return nextVid
+        }
+
+        function stopPetHead() {
+            let nextVid = pet.getVideoKey()
+            action = false
+            if (pet.getVideoKey().startsWith('clos.headscratch')) {
+                nextVid = 'clos.headscratch._out'
+                petSprite.setFrame('clos.headscratch')
+            }
+            return nextVid
+        }
+
+        function petNeck() {
+            let nextVid = pet.getVideoKey()
+            if (pet.getVideoKey().startsWith('clos')) {
+                if (pet.getVideoKey() === 'clos.neckscratch.main' || pet.getVideoKey() === 'clos.neckscratch._in') {
+                    nextVid = 'clos.neckscratch.main'
+                    petSprite.setFrame('clos.neckscratch')
+                    purrSound.play()
+                } else {
+                    nextVid = 'clos.neckscratch._in'
+                    petSprite.setFrame('clos.neckscratch')
+                }
+            }
+            return nextVid
+        }
+
+        function stopPetNeck() {
+            let nextVid = pet.getVideoKey()
+            action = false
+            if (pet.getVideoKey().startsWith('clos.neckscratch')) {
+                nextVid = 'clos.neckscratch._out'
+                petSprite.setFrame('clos.neckscratch')
+            }
             return nextVid
         }
 
@@ -233,6 +331,18 @@ class Pet extends Phaser.Scene
                     case 'mouse':
                         nextVid = giveMouse()
                         break;
+                    case 'petHead':
+                        nextVid = petHead()
+                        break;
+                    case 'stopPetHead':
+                        nextVid = stopPetHead()
+                        break;
+                    case 'petNeck':
+                        nextVid = petNeck()
+                        break;
+                    case 'stopPetNeck':
+                        nextVid = stopPetNeck()
+                        break;
                 
                     default:
                         action = false
@@ -241,6 +351,7 @@ class Pet extends Phaser.Scene
             }
             else if (pet.getVideoKey().startsWith('sta')) {
                 let rand = randomIntFromInterval(0, 99)
+                petSprite.setFrame('sta')
                 if (rand < 10) {
                     nextVid = `sta.blink`;
                 } else if (rand < 70) {
@@ -253,6 +364,9 @@ class Pet extends Phaser.Scene
             } 
             else if (pet.getVideoKey().startsWith('clos')) {
                 let rand = randomIntFromInterval(0, 99)
+                setHitbox(headHitbox, 296, 65, 80, 120)
+                setHitbox(neckHitbox, 300, 145, 80, 120)
+                petSprite.setFrame('clos')
                 if (rand < 10) {
                     nextVid = `clos.blink`;
                 } else if (rand < 70) {
@@ -261,10 +375,13 @@ class Pet extends Phaser.Scene
                     nextVid = `clos.${closIdle[randomIntFromInterval(0, closIdle.length-1)]}`;
                 } else {
                     nextVid = `${closMov[randomIntFromInterval(0, closMov.length-1)]}`;
+                    setHitbox(headHitbox, 0, 0, 0, 0)
+                    setHitbox(neckHitbox, 0, 0, 0, 0)
                 }
             } 
             else if (pet.getVideoKey().startsWith('situp')) {
                 let rand = randomIntFromInterval(0, 99)
+                petSprite.setFrame('situp')
                 if (rand < 10) {
                     nextVid = `situp.blink`;
                 } else if (rand < 70) {
@@ -277,6 +394,7 @@ class Pet extends Phaser.Scene
             } 
             else if (pet.getVideoKey().startsWith('sitdwn')) {
                 let rand = randomIntFromInterval(0, 99)
+                petSprite.setFrame('sitdwn')
                 if (rand < 80) {
                     nextVid = `lay.fromsitdwn`;
                 } else {
@@ -285,6 +403,7 @@ class Pet extends Phaser.Scene
             } 
             else if (pet.getVideoKey().startsWith('sit')) {
                 let rand = randomIntFromInterval(0, 99)
+                petSprite.setFrame('sit')
                 if (rand < 60) {
                     nextVid = `sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`;
                 } else {
@@ -293,6 +412,7 @@ class Pet extends Phaser.Scene
             } 
             else if (pet.getVideoKey().startsWith('lay')) {
                 let rand = randomIntFromInterval(0, 99)
+                petSprite.setFrame('lay')
                 if (rand < 10) {
                     nextVid = `lay.blink`;
                 } else if (rand < 70) {
@@ -305,6 +425,7 @@ class Pet extends Phaser.Scene
             } 
             else if (pet.getVideoKey().startsWith('slp')) {
                 let rand = randomIntFromInterval(0, 99)
+                petSprite.setFrame('slp')
                 if (rand < 95) {
                     nextVid = `slp.breathe`;
                 } else {
@@ -312,6 +433,7 @@ class Pet extends Phaser.Scene
                 }
             } 
 
+            petSprite.setVisible(true)
             if (nextVid !== currentVid) {
                 pet.changeSource(nextVid, true, false);
                 currentVid = nextVid
@@ -335,5 +457,8 @@ class Pet extends Phaser.Scene
 
     update ()
     {
+        if (pet.getProgress() > 0.000001) {
+            petSprite.setVisible(false);
+        }
     }
 }
