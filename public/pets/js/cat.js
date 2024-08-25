@@ -33,6 +33,7 @@ class Cat extends Phaser.Scene
         this.load.video('sta.breathe', `../../videos/${petType}/sta.breathe.webm`, true);
         this.load.video('sta.meow', `../../videos/${petType}/sta.meow.webm`, true);
         this.load.video('sta.sniffscreen', `../../videos/${petType}/sta.sniffscreen.webm`, true);
+        // this.load.video('sta.pooping.main', `../../videos/${petType}/sta.pooping.main.webm`, true);
         this.load.video('sta.aggression._in', `../../videos/${petType}/sta.aggression._in.webm`, true);
         this.load.video('sta.aggression._out', `../../videos/${petType}/sta.aggression._out.webm`, true);
         this.load.video('sta.aggression.main', `../../videos/${petType}/sta.aggression.main.webm`, true);
@@ -48,15 +49,14 @@ class Cat extends Phaser.Scene
         this.load.video('sta.neckscratch._in', `../../videos/${petType}/sta.neckscratch._in.webm`, true);
         this.load.video('sta.neckscratch._out', `../../videos/${petType}/sta.neckscratch._out.webm`, true);
         this.load.video('sta.neckscratch.main', `../../videos/${petType}/sta.neckscratch.main.webm`, true);
-        this.load.video('sta.scruff_a._out', `../../videos/${petType}/sta.scruff_a._out.webm`, true);
-        this.load.video('sta.scruff_a.main', `../../videos/${petType}/sta.scruff_a.main.webm`, true);
-        this.load.video('sta.walk_l._in', `../../videos/${petType}/sta.walk_l._in.webm`, true);
-        this.load.video('sta.walk_l._out', `../../videos/${petType}/sta.walk_l._out.webm`, true);
-        this.load.video('sta.walk_l.main', `../../videos/${petType}/sta.walk_l.main.webm`, true);
-        this.load.video('sta.walk_r._in', `../../videos/${petType}/sta.walk_r._in.webm`, true);
-        this.load.video('sta.walk_r._out', `../../videos/${petType}/sta.walk_r._out.webm`, true);
-        this.load.video('sta.walk_r.main', `../../videos/${petType}/sta.walk_r.main.webm`, true);
-        // this.load.video('sta.pooping.main', `../../videos/${petType}/sta.pooping.main.webm`, true);
+        // this.load.video('sta.scruff_a._out', `../../videos/${petType}/sta.scruff_a._out.webm`, true);
+        // this.load.video('sta.scruff_a.main', `../../videos/${petType}/sta.scruff_a.main.webm`, true);
+        // this.load.video('sta.walk_l._in', `../../videos/${petType}/sta.walk_l._in.webm`, true);
+        // this.load.video('sta.walk_l._out', `../../videos/${petType}/sta.walk_l._out.webm`, true);
+        // this.load.video('sta.walk_l.main', `../../videos/${petType}/sta.walk_l.main.webm`, true);
+        // this.load.video('sta.walk_r._in', `../../videos/${petType}/sta.walk_r._in.webm`, true);
+        // this.load.video('sta.walk_r._out', `../../videos/${petType}/sta.walk_r._out.webm`, true);
+        // this.load.video('sta.walk_r.main', `../../videos/${petType}/sta.walk_r.main.webm`, true);
         this.load.video('sta.fromclos', `../../videos/${petType}/clos.clostosta.webm`, true);
         this.load.video('sta.fromsitup', `../../videos/${petType}/mov.situptosta.webm`, true);
         this.load.video('sta.fromsit', `../../videos/${petType}/mov.sittosta.webm`, true);
@@ -135,8 +135,8 @@ class Cat extends Phaser.Scene
         this.load.video('slp.fromlay', `../../videos/${petType}/mov.laytoslp.webm`, true);
 
         this.load.video('foodin', `../../videos/${petType}/situp.eat._in.webm`, true);
-        this.load.video('eating_a', `../../videos/${petType}/sitdwn.eat.a.webm`, true);
-        this.load.video('eating_b', `../../videos/${petType}/sitdwn.eat.b.webm`, true);
+        this.load.video('eating_a', `../../videos/${petType}/sitdwn.eat_a.webm`, true);
+        this.load.video('eating_b', `../../videos/${petType}/sitdwn.eat_b.webm`, true);
         this.load.video('eating_main', `../../videos/${petType}/sitdwn.eat.main.webm`, true);
         this.load.video('sta.foodout', `../../videos/${petType}/sta.eat._out.webm`, true);
 
@@ -150,6 +150,40 @@ class Cat extends Phaser.Scene
         this.load.video('sta.mouse_miss_a', `../../videos/${petType}/sta.mouse_miss_a.webm`, true);
         this.load.video('sta.mouse_miss_b', `../../videos/${petType}/sta.mouse_miss_b.webm`, true);
         this.load.video('sta.mouse_miss_c', `../../videos/${petType}/sta.mouse_miss_c.webm`, true);
+
+        if (!missingFiles) {
+            // this.load.video('sta.peeing.main', `../../videos/${petType}/sta.peeing.main.webm`, true);
+
+            this.load.video('sit.blink', `../../videos/${petType}/sit.blink.webm`, true);
+            this.load.video('sit.breathe', `../../videos/${petType}/sit.breathe.webm`, true);
+            this.load.video('sit.hindlegscratch', `../../videos/${petType}/sit.hindlegscratch.webm`, true);
+            this.load.video('sit.meow', `../../videos/${petType}/sit.meow.webm`, true);
+            this.load.video('sit.neckscratch._in', `../../videos/${petType}/sit.neckscratch._in.webm`, true);
+            this.load.video('sit.neckscratch.main', `../../videos/${petType}/sit.neckscratch.main.webm`, true);
+            this.load.video('sit.neckscratch._out', `../../videos/${petType}/sit.neckscratch._out.webm`, true);
+
+            this.load.video('sitdwn.alive_a', `../../videos/${petType}/sitdwn.alive_a.webm`, true);
+            this.load.video('sitdwn.alive_b', `../../videos/${petType}/sitdwn.alive_b.webm`, true);
+            this.load.video('sitdwn.alive_c', `../../videos/${petType}/sitdwn.alive_c.webm`, true);
+            this.load.video('sitdwn.blink', `../../videos/${petType}/sitdwn.blink.webm`, true);
+            this.load.video('sitdwn.breathe', `../../videos/${petType}/sitdwn.breathe.webm`, true);
+            this.load.video('sitdwn.lickballs', `../../videos/${petType}/sitdwn.lickballs.webm`, true);
+            this.load.video('sitdwn.lickpaw', `../../videos/${petType}/sitdwn.lickpaw.webm`, true);
+            this.load.video('sitdwn.meow', `../../videos/${petType}/sitdwn.meow.webm`, true);
+            this.load.video('sitdwn.headscratch._in', `../../videos/${petType}/sitdwn.headscratch._in.webm`, true);
+            this.load.video('sitdwn.headscratch.main', `../../videos/${petType}/sitdwn.headscratch.main.webm`, true);
+            this.load.video('sitdwn.headscratch._out', `../../videos/${petType}/sitdwn.headscratch._out.webm`, true);
+            this.load.video('sitdwn.neckscratch._in', `../../videos/${petType}/sitdwn.neckscratch._in.webm`, true);
+            this.load.video('sitdwn.neckscratch.main', `../../videos/${petType}/sitdwn.neckscratch.main.webm`, true);
+            this.load.video('sitdwn.neckscratch._out', `../../videos/${petType}/sitdwn.neckscratch._out.webm`, true);
+
+            this.load.video('slp.alive_a', `../../videos/${petType}/slp.alive_a.webm`, true);
+            this.load.video('slp.alive_b', `../../videos/${petType}/slp.alive_b.webm`, true);
+            this.load.video('slp.blink', `../../videos/${petType}/slp.blink.webm`, true);
+            
+            this.load.video('foodin_b', `../../videos/${petType}/situp.eat._in_b.webm`, true);
+            this.load.video('drinkin_b', `../../videos/${petType}/situp.drink._in_b.webm`, true);
+        }
     }
 
     create ()
@@ -159,9 +193,14 @@ class Cat extends Phaser.Scene
         const staIdle = ['alive_a', 'alive_b', 'alive_c', 'meow', 'sniffscreen']
         const closIdle = ['lickscreen_a', 'lickscreen_b', 'meow']
         const situpIdle = ['alive_a', 'alive_b', 'alive_c', 'meow', 'lickpaw']
-        const sitIdle = ['alive_a', 'alive_b', 'alive_c']
+        const sitdwnIdle = ['alive_a', 'alive_b', 'alive_c', 'meow', 'lickpaw', 'lickballs']
+        let sitIdle = ['alive_a', 'alive_b', 'alive_c']
         const layIdle = ['alive_a', 'alive_b', 'alive_c', 'meow', 'lickbelly']
-        const slpIdle = ['breathe']
+        let slpIdle = ['breathe']
+        if (missingFiles) {
+            sitIdle = ['alive_a', 'alive_b', 'alive_c', 'blink', 'breathe', 'hindlegscratch', 'meow']
+            slpIdle = ['alive_a', 'alive_b', 'blink']
+        }
 
         const staMov = ['clos.fromsta', 'situp.fromsta', 'sit.fromsta', 'sitdwn.fromsta']
         const closMov = ['sta.fromclos']
@@ -169,7 +208,6 @@ class Cat extends Phaser.Scene
         const sitMov = ['situp.fromsit', 'sta.fromsit', 'sitdwn.fromsit']
         const sitdwnMov = ['sta.fromsitdwn', 'situp.fromsitdwn', 'sit.fromsitdwn']
         const layMov = ['sta.fromlay', 'situp.fromlay', 'sitdwn.fromlay', 'slp.fromlay']
-        const slpMov = ['lay.fromslp']
 
         const eating = ['eating_a', 'eating_b', 'eating_main', 'eating_main', 'eating_main']
         const mouse = ['sta.mouse_catch_a', 'sta.mouse_catch_b', 'sta.mouse_catch_c', 'sta.mouse_miss_a', 'sta.mouse_miss_b', 'sta.mouse_miss_c']
@@ -265,7 +303,7 @@ class Cat extends Phaser.Scene
                 action = false
                 currentAction = 'none'
                 nextVid = `sta.foodout`
-                petSprite.setFrame('eat')
+                petSprite.setFrame('eat_out')
             }
             else if (pet.getVideoKey().startsWith('foodin') || pet.getVideoKey().startsWith('eating')) {
                 nextVid = `${eating[randomIntFromInterval(0, eating.length-1)]}`;
@@ -291,7 +329,7 @@ class Cat extends Phaser.Scene
                 action = false
                 currentAction = 'none'
                 nextVid = `sta.waterout`;
-                petSprite.setFrame('drink')
+                petSprite.setFrame('drink_out')
             }
             return nextVid
         }
@@ -440,19 +478,43 @@ class Cat extends Phaser.Scene
             else if (pet.getVideoKey().startsWith('sitdwn')) {
                 let rand = randomIntFromInterval(0, 99)
                 petSprite.setFrame('sitdwn')
-                if (rand < 80) {
-                    nextVid = `lay.fromsitdwn`;
+                if (missingFiles) {
+                    if (rand < 50) {
+                        nextVid = `lay.fromsitdwn`;
+                    } else {
+                        nextVid = `${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`;
+                    }
                 } else {
-                    nextVid = `${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`;
+                    if (rand < 10) {
+                        nextVid = `sitdwn.blink`;
+                    } else if (rand < 70) {
+                        nextVid = `sitdwn.breathe`;
+                    } else if (rand < 85) {
+                        nextVid = `sitdwn.${sitdwnIdle[randomIntFromInterval(0, sitdwnIdle.length-1)]}`;
+                    } else {
+                        nextVid = `${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`;
+                    }
                 }
             } 
             else if (pet.getVideoKey().startsWith('sit')) {
                 let rand = randomIntFromInterval(0, 99)
                 petSprite.setFrame('sit')
-                if (rand < 60) {
-                    nextVid = `sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`;
+                if (missingFiles) {
+                    if (rand < 60) {
+                        nextVid = `sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`;
+                    } else {
+                        nextVid = `${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`;
+                    }
                 } else {
-                    nextVid = `${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`;
+                    if (rand < 10) {
+                        nextVid = `sit.blink`;
+                    } else if (rand < 70) {
+                        nextVid = `sit.breathe`;
+                    } else if (rand < 85) {
+                        nextVid = `sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`;
+                    } else {
+                        nextVid = `${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`;
+                    }
                 }
             } 
             else if (pet.getVideoKey().startsWith('lay')) {
@@ -471,7 +533,7 @@ class Cat extends Phaser.Scene
             else if (pet.getVideoKey().startsWith('slp')) {
                 let rand = randomIntFromInterval(0, 99)
                 petSprite.setFrame('slp')
-                if (rand < 90) {
+                if (rand < 85) {
                     nextVid = `slp.breathe`;
                 } else if (rand < 95) {
                     nextVid = `slp.${slpIdle[randomIntFromInterval(0, slpIdle.length-1)]}`;

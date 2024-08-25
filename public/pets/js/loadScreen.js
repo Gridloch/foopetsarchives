@@ -13,10 +13,23 @@ class Load extends Phaser.Scene
 
     create ()
     { 
-        console.log(petType)
-        if (petType === null) {
-            petType = 'abyssinian'
+        let loadScene
+        switch (petType) {
+            case 'abyssinian':
+                missingFiles = true
+                loadScene = 'cat'
+                break;
+            case 'bengal':
+                missingFiles = false
+                loadScene = 'cat'
+                break;
+        
+            default:
+                petType = 'abyssinian'
+                missingFiles = true
+                loadScene = 'cat'
+                break;
         }
-        this.scene.start('cat');
+        this.scene.start(loadScene);
     }
 }
