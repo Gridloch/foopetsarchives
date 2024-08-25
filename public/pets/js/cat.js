@@ -83,9 +83,9 @@ class Cat extends Phaser.Scene
         this.load.video('situp.breathe', `../../videos/${petType}/situp.breathe.webm`, true);
         this.load.video('situp.meow', `../../videos/${petType}/situp.meow.webm`, true);
         this.load.video('situp.lickpaw', `../../videos/${petType}/situp.lickpaw.webm`, true);
-        this.load.video('situp.headscratch._in', `../../videos/${petType}/lay.situp._in.webm`, true);
-        this.load.video('situp.headscratch._out', `../../videos/${petType}/lay.situp._out.webm`, true);
-        this.load.video('situp.headscratch.main', `../../videos/${petType}/lay.situp.main.webm`, true);
+        this.load.video('situp.headscratch._in', `../../videos/${petType}/situp.headscratch._in.webm`, true);
+        this.load.video('situp.headscratch._out', `../../videos/${petType}/situp.headscratch._out.webm`, true);
+        this.load.video('situp.headscratch.main', `../../videos/${petType}/situp.headscratch.main.webm`, true);
         this.load.video('situp.neckscratch._in', `../../videos/${petType}/situp.neckscratch._in.webm`, true);
         this.load.video('situp.neckscratch._out', `../../videos/${petType}/situp.neckscratch._out.webm`, true);
         this.load.video('situp.neckscratch.main', `../../videos/${petType}/situp.neckscratch.main.webm`, true);
@@ -212,13 +212,13 @@ class Cat extends Phaser.Scene
         const eating = ['eating_a', 'eating_b', 'eating_main', 'eating_main', 'eating_main']
         const mouse = ['sta.mouse_catch_a', 'sta.mouse_catch_b', 'sta.mouse_catch_c', 'sta.mouse_miss_a', 'sta.mouse_miss_b', 'sta.mouse_miss_c']
 
+        let currentVid = 'sta.breathe'
         petSprite = this.add.sprite(374, 165, 'petSprite', 'sta').setOrigin(.5, .5).setVisible(false);
-        pet = this.add.video(374, 165, 'sta.breathe').setOrigin(.5, .5);
+        pet = this.add.video(374, 165, currentVid).setOrigin(.5, .5);
         const meowSound = this.sound.add('meowSound');
         const purrSound = this.sound.add('purrSound');
         let action = false
         let currentAction = 'none'
-        let currentVid = 'sta.breathe'
 
         pet.on('complete',switchVideo);
         pet.play()
@@ -232,31 +232,58 @@ class Cat extends Phaser.Scene
         let buttHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let head = this.add.graphics().setInteractive({ hitArea: headHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
         let neck = this.add.graphics().setInteractive({ hitArea: neckHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let belly = this.add.graphics().setInteractive({ hitArea: bellyHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let back = this.add.graphics().setInteractive({ hitArea: backHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let butt = this.add.graphics().setInteractive({ hitArea: buttHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let frame = this.add.graphics().setInteractive({ hitArea: new Phaser.Geom.Rectangle(0, 0, 330, 748), hitAreaCallback: Phaser.Geom.Rectangle.Contains });
         
-        this.input.setDraggable([head, neck]);
-        this.input.dragDistanceThreshold = 32;
+        this.input.setDraggable([head, neck, belly, back, butt]);
+        this.input.dragDistanceThreshold = 10;
+        this.input.topOnly = false;
 
         head.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Head')});
         neck.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Neck')});
+        belly.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Belly')});
+        back.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Back')});
+        butt.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Butt')});
         
-        head.on('pointerup', () => { currentAction = 'stopPetHead'; keepDragging = true })
-        neck.on('pointerup', () => { currentAction = 'stopPetNeck'; keepDragging = true })
+        frame.on('pointerup', () => { stopPetInteraction() })
+        head.on('pointerup', () => { stopPetInteraction() })
+        neck.on('pointerup', () => { stopPetInteraction() })
+        belly.on('pointerup', () => { stopPetInteraction() })
+        back.on('pointerup', () => { stopPetInteraction() })
+        butt.on('pointerup', () => { stopPetInteraction() })
+
+        function stopPetInteraction() {
+            if (currentAction !== null && currentAction.startsWith('pet')) {
+                currentAction = `stopP${currentAction.substring(1)}`
+            }; keepDragging = true 
+        }
 
         function petInteraction(pointer, dragX, dragY, location) {
-            if ( Math.abs(dragX) > 100 || Math.abs(dragY) > 40) {
+            if ( Math.abs(dragX) > 120 || Math.abs(dragY) > 50) {
                 currentAction = `stopPet${location}`
                 keepDragging = false
-            } else if (keepDragging) {
+            } else if (keepDragging && !currentVid.includes('from')) {
+                // Ignoring transition videos since petting should not start as the pet switches positions
                 currentAction = `pet${location}`
                 action = true
             }
         }
 
+        /**
+         * Adjusts the x, y, width and height of the given hitbox to match the provided values
+         * @param {*} hitbox The hitbox to adjust
+         * @param {*} x The new x position for the hitbox
+         * @param {*} y The new y position for the hitbox
+         * @param {*} width The new width for the hitbox
+         * @param {*} height The new height for the hitbox
+         */
         function setHitbox(hitbox, x, y, width, height) {
             hitbox.x = x
             hitbox.y = y
-            hitbox.width = height
-            hitbox.height = width
+            hitbox.width = width
+            hitbox.height = height
         }
 
         // Buttons
@@ -293,6 +320,7 @@ class Cat extends Phaser.Scene
             }
         });
 
+        // Video switching
         function giveFood() {
             let nextVid = null
             if (pet.getVideoKey().startsWith('sta')) {nextVid = `situp.fromsta`; petSprite.setFrame('sta')}
@@ -354,56 +382,90 @@ class Cat extends Phaser.Scene
             return nextVid
         }
 
-        function petHead() {
-            let nextVid = null
-            if (pet.getVideoKey().startsWith('clos')) {
-                if (pet.getVideoKey() === 'clos.headscratch.main' || pet.getVideoKey() === 'clos.headscratch._in') {
-                    nextVid = 'clos.headscratch.main'
-                    petSprite.setFrame('clos.headscratch')
-                    purrSound.play()
+        /**
+         * Determines the if the pet is standing, sitting, &c. from the standard set of positions
+         * @returns the current position of the pet if known
+         */
+        function getPetPosition() {
+            let position
+            if (pet.getVideoKey().startsWith('clos')) { position = 'clos' }
+            else if (pet.getVideoKey().startsWith('sta')) { position = 'sta' }
+            else if (pet.getVideoKey().startsWith('situp')) { position = 'situp' }
+            else if (pet.getVideoKey().startsWith('sitdwn')) { position = 'sitdwn' }
+            else if (pet.getVideoKey().startsWith('sit')) { position = 'sit' }
+            else if (pet.getVideoKey().startsWith('lay')) { position = 'lay' }
+            else if (pet.getVideoKey().startsWith('slp')) { position = 'slp' }
+            return position
+        }
+
+        /**
+         * Gets the next video when the player is petting the pet
+         * @param {*} location The location where the animal is being petted (e.g. head, neck or back)
+         * @returns The next video to play
+         */
+        function petAnimal(location) {
+            let nextVid
+            let position = getPetPosition()
+            console.log(position)
+            if (pet.getVideoKey() === `${position}.${location}scratch.main` || pet.getVideoKey() === `${position}.${location}scratch._in`) {
+                nextVid = `${position}.${location}scratch.main`
+                petSprite.setFrame(`${position}.${location}scratch`)
+                purrSound.play()
+            } else if (position === 'sta' && location === 'butt' ) {
+                // Buttscratch starts from backscratch instead of from main idle
+                if (pet.getVideoKey() === 'sta.backscratch._in') {
+                    nextVid = 'sta.buttscratch._in'
+                    petSprite.setFrame(`sta.backscratch`)
                 } else {
-                    nextVid = 'clos.headscratch._in'
-                    petSprite.setFrame('clos')
+                    nextVid = 'sta.backscratch._in'
+                    petSprite.setFrame(`sta`)
                 }
+            } else {
+                nextVid = `${position}.${location}scratch._in`
+                petSprite.setFrame(position)
             }
             return nextVid
         }
 
-        function stopPetHead() {
+
+        /**
+         * Gets the next video when the player stops petting the pet
+         * @param {*} location The location where the animal was being petted (e.g. head, neck or back)
+         * @returns The next video to play
+         */
+        function stopPetAnimal(location) {
             let nextVid = null
+            currentAction = null
+            let position = getPetPosition()
             action = false
-            if (pet.getVideoKey().startsWith('clos.headscratch')) {
-                nextVid = 'clos.headscratch._out'
-                petSprite.setFrame('clos.headscratch')
-            }
-            return nextVid
-        }
-
-        function petNeck() {
-            let nextVid = null
-            if (pet.getVideoKey().startsWith('clos')) {
-                if (pet.getVideoKey() === 'clos.neckscratch.main' || pet.getVideoKey() === 'clos.neckscratch._in') {
-                    nextVid = 'clos.neckscratch.main'
-                    petSprite.setFrame('clos.neckscratch')
-                    purrSound.play()
-                } else {
-                    nextVid = 'clos.neckscratch._in'
-                    petSprite.setFrame('clos')
+            if (pet.getVideoKey().startsWith(`${position}.${location}scratch`)) {
+                nextVid = `${position}.${location}scratch._out`
+                petSprite.setFrame(`${position}.${location}scratch`)
+                if (location === 'butt') {
+                    // Buttscratch and ends through backscratch, so transition out of backscratch next
+                    currentAction = 'stopPetBack'
+                    action = true
                 }
+            } else if (pet.getVideoKey().startsWith(`${position}.backscratch`)) {
+                // Buttscratch starts with backscratch, so video may not have transitioned to buttscratch
+                nextVid = `${position}.backscratch._out`
+                petSprite.setFrame(`${position}.backscratch`)
+            } else if (pet.getVideoKey().startsWith(`${position}.buttscratch`)) {
+                // Buttscratch ends through backscratch, so video names may not begin the same
+                nextVid = `${position}.backscratch._out`
+                petSprite.setFrame(`${position}.backscratch`)
             }
             return nextVid
         }
 
-        function stopPetNeck() {
-            let nextVid = null
-            action = false
-            if (pet.getVideoKey().startsWith('clos.neckscratch')) {
-                nextVid = 'clos.neckscratch._out'
-                petSprite.setFrame('clos.neckscratch')
-            }
-            return nextVid
-        }
-
+        /**
+         * Gets the next video randomly from the given set of idle and transition animations.
+         * Note that this function assumes there is a blink and a breathe animation for the given position.
+         * @param {*} position The position the pet is in
+         * @param {*} idleArray The array of idle animations for the position
+         * @param {*} movArray The array of transition animations for the position
+         * @returns 
+         */
         function getNextVideo(position, idleArray, movArray) {
             petSprite.setFrame(position)
             let nextVid = null
@@ -428,6 +490,7 @@ class Cat extends Phaser.Scene
 
         function switchVideo() {
             let nextVid = null
+            // Do action if player interaction has occurred, otherwise, continue idling with random movements
             if (action) {
                 switch (currentAction) {
                     case 'feed':
@@ -440,16 +503,34 @@ class Cat extends Phaser.Scene
                         nextVid = giveMouse()
                         break;
                     case 'petHead':
-                        nextVid = petHead()
-                        break;
-                    case 'stopPetHead':
-                        nextVid = stopPetHead()
+                        nextVid = petAnimal('head')
                         break;
                     case 'petNeck':
-                        nextVid = petNeck()
+                        nextVid = petAnimal('neck')
+                        break;
+                    case 'petBelly':
+                        nextVid = petAnimal('belly')
+                        break;
+                    case 'petBack':
+                        nextVid = petAnimal('back')
+                        break;
+                    case 'petButt':
+                        nextVid = petAnimal('butt')
+                        break;
+                    case 'stopPetHead':
+                        nextVid = stopPetAnimal('head')
                         break;
                     case 'stopPetNeck':
-                        nextVid = stopPetNeck()
+                        nextVid = stopPetAnimal('neck')
+                        break;
+                    case 'stopPetBelly':
+                        nextVid = stopPetAnimal('belly')
+                        break;
+                    case 'stopPetBack':
+                        nextVid = stopPetAnimal('back')
+                        break;
+                    case 'stopPetButt':
+                        nextVid = stopPetAnimal('butt')
                         break;
                 
                     default:
@@ -459,15 +540,23 @@ class Cat extends Phaser.Scene
             }
             else if (pet.getVideoKey().startsWith('sta')) {
                 nextVid = getNextVideo('sta', staIdle,staMov)
+                // Resize hitboxes for petting
+                setHitbox(headHitbox, 307, 80, 60, 60)
+                setHitbox(neckHitbox, 307, 140, 40, 60)
+                setHitbox(backHitbox, 347, 140, 25, 60)
+                setHitbox(buttHitbox, 372, 140, 25, 60)
             } 
             else if (pet.getVideoKey().startsWith('clos')) {
                 nextVid = getNextVideo('clos', closIdle, closMov)
                 // Resize hitboxes for petting
-                setHitbox(headHitbox, 296, 65, 80, 120)
-                setHitbox(neckHitbox, 300, 145, 80, 120)
+                setHitbox(headHitbox, 296, 65, 120, 80)
+                setHitbox(neckHitbox, 300, 155, 120, 80)
             } 
             else if (pet.getVideoKey().startsWith('situp')) {
                 nextVid = getNextVideo('situp', situpIdle, situpMov)
+                // Resize hitboxes for petting
+                setHitbox(headHitbox, 317, 80, 60, 55)
+                setHitbox(neckHitbox, 317, 135, 60, 40)
             } 
             else if (pet.getVideoKey().startsWith('sitdwn')) {
                 if (missingFiles) {
@@ -479,10 +568,15 @@ class Cat extends Phaser.Scene
                         nextVid = `${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`;
                     }
                 } else {
+                    // Resize hitboxes for petting
+                    setHitbox(headHitbox, 287, 145, 60, 55)
+                    setHitbox(neckHitbox, 297, 200, 60, 50)
                     nextVid = getNextVideo('sitdwn', sitdwnIdle, sitdwnMov)
                 }
             } 
             else if (pet.getVideoKey().startsWith('sit')) {
+                // Resize hitboxes for petting
+                setHitbox(headHitbox, 327, 90, 60, 55)
                 if (missingFiles) {
                     petSprite.setFrame('sit')
                     let rand = randomIntFromInterval(0, 99)
@@ -492,10 +586,17 @@ class Cat extends Phaser.Scene
                         nextVid = `${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`;
                     }
                 } else {
+                    // Resize hitboxes for petting
+                    setHitbox(neckHitbox, 317, 145, 60, 50)
+                    petSprite.setFrame('sit')
                     nextVid = getNextVideo('sit', sitIdle, sitMov)
                 }
             } 
             else if (pet.getVideoKey().startsWith('lay')) {
+                // Resize hitboxes for petting
+                setHitbox(headHitbox, 282, 145, 60, 55)
+                setHitbox(neckHitbox, 287, 200, 50, 50)
+                setHitbox(bellyHitbox, 337, 180, 50, 65)
                 nextVid = getNextVideo('lay', layIdle, layMov)
             } 
             else if (pet.getVideoKey().startsWith('slp')) {
@@ -510,15 +611,39 @@ class Cat extends Phaser.Scene
                 }
             } 
 
+            // Backup for if no video has been selected
+            if (nextVid === null) {
+                console.log(
+                    `ERROR - nextVid is null
+    currentVid: ${currentVid}
+    action: ${action}
+    currentAction: ${currentAction}`)
+                if (currentVid.startsWith('sta')) {nextVid = 'sta.breathe'}
+                else if (currentVid.startsWith('clos')) {nextVid = 'clos.breathe'}
+                else if (currentVid.startsWith('situp')) {nextVid = 'situp.breathe'}
+                else if (currentVid.startsWith('sitdwn')) {nextVid = 'lay.fromsitdwn'}
+                else if (currentVid.startsWith('sit')) {nextVid = 'sit.alive_a'}
+                else if (currentVid.startsWith('lay')) {nextVid = 'lay.breathe'}
+                else if (currentVid.startsWith('slp')) {nextVid = 'slp.breathe'}
+                else {nextVid = currentVid}
+                action = false
+            } 
+
+            // Show sprite as backup for the brief moment when the video may not be visible
             petSprite.setVisible(true)
+
+            // If the nextVid is different from the current one, update the current video
             if (nextVid !== currentVid) {
                 pet.changeSource(nextVid, true, false);
                 currentVid = nextVid
-                // add a counter here to break out of loops?
             }
+
+            // Add sounds
             if (nextVid.includes('meow')) {
                 meowSound.play()
             }
+
+            // Play the video
             pet.play()
         }
 
