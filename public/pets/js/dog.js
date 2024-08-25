@@ -1,9 +1,10 @@
-class Cat extends Phaser.Scene
+// Placeholder for dog.js
+class Dog extends Phaser.Scene
 {
     constructor ()
     {
         super({
-            key: 'cat'
+            key: 'dog'
         });
     }
 
