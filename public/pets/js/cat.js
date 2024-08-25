@@ -197,8 +197,8 @@ class Cat extends Phaser.Scene
         let sitIdle = ['alive_a', 'alive_b', 'alive_c']
         const layIdle = ['alive_a', 'alive_b', 'alive_c', 'meow', 'lickbelly']
         let slpIdle = ['breathe']
-        if (missingFiles) {
-            sitIdle = ['alive_a', 'alive_b', 'alive_c', 'blink', 'breathe', 'hindlegscratch', 'meow']
+        if (!missingFiles) {
+            sitIdle = ['alive_a', 'alive_b', 'alive_c', 'hindlegscratch', 'meow']
             slpIdle = ['alive_a', 'alive_b', 'blink']
         }
 
