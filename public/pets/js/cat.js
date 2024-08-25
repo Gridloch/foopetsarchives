@@ -227,6 +227,9 @@ class Cat extends Phaser.Scene
         let keepDragging = true
         let headHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let neckHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let bellyHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let backHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let buttHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let head = this.add.graphics().setInteractive({ hitArea: headHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
         let neck = this.add.graphics().setInteractive({ hitArea: neckHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
         
@@ -401,6 +404,28 @@ class Cat extends Phaser.Scene
             return nextVid
         }
 
+        function getNextVideo(position, idleArray, movArray) {
+            petSprite.setFrame(position)
+            let nextVid = null
+            let rand = randomIntFromInterval(0, 99)
+            if (rand < 10) {
+                nextVid = `${position}.blink`;
+            } else if (rand < 70) {
+                nextVid = `${position}.breathe`;
+            } else if (rand < 85) {
+                nextVid = `${position}.${idleArray[randomIntFromInterval(0, idleArray.length-1)]}`;
+            } else {
+                nextVid = `${movArray[randomIntFromInterval(0, movArray.length-1)]}`;
+                // Reset hitboxes for petting
+                setHitbox(headHitbox, 0, 0, 0, 0)
+                setHitbox(neckHitbox, 0, 0, 0, 0)
+                setHitbox(bellyHitbox, 0, 0, 0, 0)
+                setHitbox(backHitbox, 0, 0, 0, 0)
+                setHitbox(buttHitbox, 0, 0, 0, 0)
+            }
+            return nextVid
+        }
+
         function switchVideo() {
             let nextVid = null
             if (action) {
@@ -433,112 +458,55 @@ class Cat extends Phaser.Scene
                 }
             }
             else if (pet.getVideoKey().startsWith('sta')) {
-                let rand = randomIntFromInterval(0, 99)
-                petSprite.setFrame('sta')
-                if (rand < 10) {
-                    nextVid = `sta.blink`;
-                } else if (rand < 70) {
-                    nextVid = `sta.breathe`;
-                } else if (rand < 85) {
-                    nextVid = `sta.${staIdle[randomIntFromInterval(0, staIdle.length-1)]}`;
-                } else {
-                    nextVid = `${staMov[randomIntFromInterval(0, staMov.length-1)]}`;
-                }
+                nextVid = getNextVideo('sta', staIdle,staMov)
             } 
             else if (pet.getVideoKey().startsWith('clos')) {
-                let rand = randomIntFromInterval(0, 99)
+                nextVid = getNextVideo('clos', closIdle, closMov)
+                // Resize hitboxes for petting
                 setHitbox(headHitbox, 296, 65, 80, 120)
                 setHitbox(neckHitbox, 300, 145, 80, 120)
-                petSprite.setFrame('clos')
-                if (rand < 10) {
-                    nextVid = `clos.blink`;
-                } else if (rand < 70) {
-                    nextVid = `clos.breathe`;
-                } else if (rand < 85) {
-                    nextVid = `clos.${closIdle[randomIntFromInterval(0, closIdle.length-1)]}`;
-                } else {
-                    nextVid = `${closMov[randomIntFromInterval(0, closMov.length-1)]}`;
-                    setHitbox(headHitbox, 0, 0, 0, 0)
-                    setHitbox(neckHitbox, 0, 0, 0, 0)
-                }
             } 
             else if (pet.getVideoKey().startsWith('situp')) {
-                let rand = randomIntFromInterval(0, 99)
-                petSprite.setFrame('situp')
-                if (rand < 10) {
-                    nextVid = `situp.blink`;
-                } else if (rand < 70) {
-                    nextVid = `situp.breathe`;
-                } else if (rand < 85) {
-                    nextVid = `situp.${situpIdle[randomIntFromInterval(0, situpIdle.length-1)]}`;
-                } else {
-                    nextVid = `${situpMov[randomIntFromInterval(0, situpMov.length-1)]}`;
-                }
+                nextVid = getNextVideo('situp', situpIdle, situpMov)
             } 
             else if (pet.getVideoKey().startsWith('sitdwn')) {
-                let rand = randomIntFromInterval(0, 99)
-                petSprite.setFrame('sitdwn')
                 if (missingFiles) {
+                    petSprite.setFrame('sitdwn')
+                    let rand = randomIntFromInterval(0, 99)
                     if (rand < 50) {
                         nextVid = `lay.fromsitdwn`;
                     } else {
                         nextVid = `${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`;
                     }
                 } else {
-                    if (rand < 10) {
-                        nextVid = `sitdwn.blink`;
-                    } else if (rand < 70) {
-                        nextVid = `sitdwn.breathe`;
-                    } else if (rand < 85) {
-                        nextVid = `sitdwn.${sitdwnIdle[randomIntFromInterval(0, sitdwnIdle.length-1)]}`;
-                    } else {
-                        nextVid = `${sitdwnMov[randomIntFromInterval(0, sitdwnMov.length-1)]}`;
-                    }
+                    nextVid = getNextVideo('sitdwn', sitdwnIdle, sitdwnMov)
                 }
             } 
             else if (pet.getVideoKey().startsWith('sit')) {
-                let rand = randomIntFromInterval(0, 99)
-                petSprite.setFrame('sit')
                 if (missingFiles) {
+                    petSprite.setFrame('sit')
+                    let rand = randomIntFromInterval(0, 99)
                     if (rand < 60) {
                         nextVid = `sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`;
                     } else {
                         nextVid = `${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`;
                     }
                 } else {
-                    if (rand < 10) {
-                        nextVid = `sit.blink`;
-                    } else if (rand < 70) {
-                        nextVid = `sit.breathe`;
-                    } else if (rand < 85) {
-                        nextVid = `sit.${sitIdle[randomIntFromInterval(0, sitIdle.length-1)]}`;
-                    } else {
-                        nextVid = `${sitMov[randomIntFromInterval(0, sitMov.length-1)]}`;
-                    }
+                    nextVid = getNextVideo('sit', sitIdle, sitMov)
                 }
             } 
             else if (pet.getVideoKey().startsWith('lay')) {
-                let rand = randomIntFromInterval(0, 99)
-                petSprite.setFrame('lay')
-                if (rand < 10) {
-                    nextVid = `lay.blink`;
-                } else if (rand < 70) {
-                    nextVid = `lay.breathe`;
-                } else if (rand < 85) {
-                    nextVid = `lay.${layIdle[randomIntFromInterval(0, layIdle.length-1)]}`;
-                } else {
-                    nextVid = `${layMov[randomIntFromInterval(0, layMov.length-1)]}`;
-                }
+                nextVid = getNextVideo('lay', layIdle, layMov)
             } 
             else if (pet.getVideoKey().startsWith('slp')) {
-                let rand = randomIntFromInterval(0, 99)
                 petSprite.setFrame('slp')
+                let rand = randomIntFromInterval(0, 99)
                 if (rand < 85) {
                     nextVid = `slp.breathe`;
                 } else if (rand < 95) {
                     nextVid = `slp.${slpIdle[randomIntFromInterval(0, slpIdle.length-1)]}`;
                 } else {
-                    nextVid = `${slpIdle[randomIntFromInterval(0, slpIdle.length-1)]}`;
+                    nextVid = 'lay.fromslp';
                 }
             } 
 
