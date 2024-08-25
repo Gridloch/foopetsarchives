@@ -385,7 +385,7 @@ class Cat extends Phaser.Scene
                     purrSound.play()
                 } else {
                     nextVid = 'clos.neckscratch._in'
-                    petSprite.setFrame('clos.neckscratch')
+                    petSprite.setFrame('clos')
                 }
             }
             return nextVid
