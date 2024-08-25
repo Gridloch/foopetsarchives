@@ -478,14 +478,18 @@ class Cat extends Phaser.Scene
                 nextVid = `${position}.${idleArray[randomIntFromInterval(0, idleArray.length-1)]}`;
             } else {
                 nextVid = `${movArray[randomIntFromInterval(0, movArray.length-1)]}`;
-                // Reset hitboxes for petting
-                setHitbox(headHitbox, 0, 0, 0, 0)
-                setHitbox(neckHitbox, 0, 0, 0, 0)
-                setHitbox(bellyHitbox, 0, 0, 0, 0)
-                setHitbox(backHitbox, 0, 0, 0, 0)
-                setHitbox(buttHitbox, 0, 0, 0, 0)
+                resetHitboxes()
             }
             return nextVid
+        }
+
+        function resetHitboxes() {
+            // Reset hitboxes for petting
+            setHitbox(headHitbox, 0, 0, 0, 0)
+            setHitbox(neckHitbox, 0, 0, 0, 0)
+            setHitbox(bellyHitbox, 0, 0, 0, 0)
+            setHitbox(backHitbox, 0, 0, 0, 0)
+            setHitbox(buttHitbox, 0, 0, 0, 0)
         }
 
         function switchVideo() {
@@ -495,12 +499,15 @@ class Cat extends Phaser.Scene
                 switch (currentAction) {
                     case 'feed':
                         nextVid = giveFood()
+                        resetHitboxes()
                         break;
                     case 'water':
                         nextVid = giveWater()
+                        resetHitboxes()
                         break;
                     case 'mouse':
                         nextVid = giveMouse()
+                        resetHitboxes()
                         break;
                     case 'petHead':
                         nextVid = petAnimal('head')
@@ -618,13 +625,13 @@ class Cat extends Phaser.Scene
     currentVid: ${currentVid}
     action: ${action}
     currentAction: ${currentAction}`)
-                if (currentVid.startsWith('sta')) {nextVid = 'sta.breathe'}
-                else if (currentVid.startsWith('clos')) {nextVid = 'clos.breathe'}
-                else if (currentVid.startsWith('situp')) {nextVid = 'situp.breathe'}
-                else if (currentVid.startsWith('sitdwn')) {nextVid = 'lay.fromsitdwn'}
-                else if (currentVid.startsWith('sit')) {nextVid = 'sit.alive_a'}
-                else if (currentVid.startsWith('lay')) {nextVid = 'lay.breathe'}
-                else if (currentVid.startsWith('slp')) {nextVid = 'slp.breathe'}
+                if (currentVid.startsWith('sta')) {nextVid = 'sta.breathe'; petSprite = 'sta'}
+                else if (currentVid.startsWith('clos')) {nextVid = 'clos.breathe'; petSprite = 'clos'}
+                else if (currentVid.startsWith('situp')) {nextVid = 'situp.breathe'; petSprite = 'situp'}
+                else if (currentVid.startsWith('sitdwn')) {nextVid = 'lay.fromsitdwn'; petSprite = 'sitdwn'}
+                else if (currentVid.startsWith('sit')) {nextVid = 'sit.alive_a'; petSprite = 'sit'}
+                else if (currentVid.startsWith('lay')) {nextVid = 'lay.breathe'; petSprite = 'lay'}
+                else if (currentVid.startsWith('slp')) {nextVid = 'slp.breathe'; petSprite = 'slp'}
                 else {nextVid = currentVid}
                 action = false
             } 
