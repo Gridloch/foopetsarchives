@@ -23,6 +23,10 @@ class Load extends Phaser.Scene
                 missingFiles = false
                 loadScene = 'cat'
                 break;
+            case 'husky':
+                missingFiles = false
+                loadScene = 'dog'
+                break;
         
             default:
                 petType = 'abyssinian'

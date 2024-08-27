@@ -56,10 +56,9 @@
       </div>
       <br>
 
-      Note: This is a VERY rough start at trying to display the archived FooPets pet videos. 
-      So far it just includes some of the files for the <a href="./index.html?pet=abyssinian">abyssinian</a> and <a href="./index.html?pet=bengal">bengal</a> cats (which didn't have sound in the original video files)
-      and issues with playing and switching the videos are to be expected.
-      The videos also may not display the transparency correctly on certain browsers.
+      Note: This is a VERY rough start at trying to display the archived FooPets pet videos,
+      so issues with playing and switching the videos are to be expected.
+      The videos also may not display the transparency correctly on certain browsers and many of the videos lacked sound.
       <br>
       <br>
       <b>It is also probably not a good idea to have this page open if you are using mobile data!</b>
@@ -67,9 +66,153 @@
       <br>
       That said, this is just the start - more videos and pets have been archived and are slowly being added.
 
-      
+      <br>
+      <br>
+      <hr>
+
+      <style>
+        div.pet_name_div span {
+          display:block;
+          margin-top:-2px;
+          font-family: Tahoma,'Myriad Pro', 'Myriad Web', 'Myriad Std', 'Gill Sans', 'Gill Sans MT', 'Gill Sans Std', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', Helvetica, sans-serif;
+          font-size:13px;
+          font-weight:bold;
+          text-align: center;
+          }
         
-      <div style="clear:both"></div>
+        div.adoptionthumbs ul {
+          display:block;
+          width:100%;
+          margin:0;
+          padding:0;
+        }
+        div.adoptionthumbs ul li{
+          float:left;
+          width:152px;
+          height:152px;
+        }
+        div.adoptionthumbs ul li a{
+          display:block;
+          width:100%;
+          height:100%;
+          text-indent:-5000px;
+          font-size:14px;
+          font-weight:bold;
+          line-height:152px;
+          text-decoration:none;
+          text-align:center;
+          color:#000;
+          white-space:nowrap;
+        }
+        div.adoptionthumbs ul li a:hover{
+          text-indent:0;
+        }
+        div.adoptionthumbs ul li a span{
+          display:inline;
+          padding:2px 5px;
+          background-color:Transparent;
+        }
+        div.adoptionthumbs ul li a:hover span{
+          background-color:#b0e53f;
+           -moz-opacity:.80; filter:alpha(opacity=80); opacity:.80;
+          -moz-border-radius:11px;
+          border-radius:11px;
+        }
+        div#thumbs_dogs{
+          height:912px;
+          background-image:url('/images/dogsheet.jpg')
+        }
+        div#thumbs_cats{
+          height:457px;
+          background-image:url('/images/catsheet.jpg')
+        }
+        div#pet_chooser{
+          margin-top:20px;
+        }
+        div#pet_chooser h2{
+          font-size:26px;
+          padding:0;
+          margin:20px 0 20px 25px;
+        }
+        div#pet_chooser h2 a{
+          text-decoration:none;
+          font-size:16px;
+        }
+        li.lock{
+          background-image:url('/images/foopets_lock.png');
+          background-repeat:no-repeat;
+          background-position:center bottom;
+        }
+        a:hover{
+          text-decoration:underline;
+        }
+      </style>
+      
+      <div id="pet_chooser">
+        <div>
+          <a name="puppies"></a><h2>Choose Your Favorite Puppy!
+          <a href="#kittens"><b>Show Kittens</b></a><!-- | <a href="#screenshots">Show Screenshots</a> --></h2>
+        </div>
+        <div id="thumbs_dogs" class="adoptionthumbs" style="display:block">
+          <ul>
+            <li class="lock"><a><span>Yorkie</span></a></li>
+            <li class=""><a href="./index.html?pet=husky"><span>Husky</span></a></li>
+            <li class="lock"><a><span>Westie</span></a></li>
+            <li class="lock"><a><span>Rottweiler</span></a></li>
+            <li class="lock"><a><span>Mastiff</span></a></li>
+            <li class="lock"><a><span>Black Lab Mix</span></a></li>
+            <li class="lock"><a><span>Yellow Lab Mix</span></a></li>
+            <li class="lock"><a><span>German Shepherd</span></a></li>
+            <li class="lock"><a><span>Red Husky</span></a></li>
+            <li class="lock"><a><span>Pit Bull</span></a></li>
+            <li class="lock"><a><span>Dalmatian</span></a></li>
+            <li class="lock"><a><span>Australian Shepherd</span></a></li>
+            <li class="lock"><a><span>Chocolate Lab Mix</span></a></li>
+            <li class="lock"><a><span>Weimaraner</span></a></li>
+            <li class="lock"><a><span>Jack Russell</span></a></li>
+            <li class="lock"><a><span>Golden Retriever</span></a></li>
+            <li class="lock"><a><span>Portuguese Water Dog</span></a></li>
+            <li class="lock"><a><span>White Poodle Mix</span></a></li>
+            <li class="lock"><a><span>Boxer</span></a></li>
+            <li class="lock"><a><span>Mini Schnauzer</span></a></li>
+            <li class="lock"><a><span>Pug</span></a></li>
+            <li class="lock"><a><span>Miniature Pinscher</span></a></li>
+            <li class="lock"><a><span>Dachshund</span></a></li>
+            <li class="lock"><a><span>Shiba Inu</span></a></li>
+            <li class="lock"><a><span>Beagle</span></a></li>
+            <li class="lock"><a><span>Jack Russel Terrier Rough Coat</span></a></li>
+            <li class="lock"><a><span>Bulldog</span></a></li>
+            <li class="lock"><a><span>Great Dane</span></a></li>
+            <li class="lock"><a><span>Boston Terrier</span></a></li>
+            <li class="lock"><a><span>Chihuahua</span></a></li>
+          </ul>
+        </div>
+        <div>
+          <a name="kittens"></a><h2>Choose Your Favorite Kitten!
+          <a href="#puppies"><b>Show Puppies</b></a></h2>
+        </div>
+        <div id="thumbs_cats" class="adoptionthumbs" style="display:block">
+          <ul>
+            <li class="lock"><a><span>Long Haired Silver Tabby</span></a></li>
+            <li class="lock"><a><span>Orange Mix</span></a></li>
+            <li class="lock"><a><span>White Cat</span></a></li>
+            <li class="lock"><a><span>Black Mix</span></a></li>
+            <li class="lock"><a><span>Russian Blue</span></a></li>
+            <li class="lock"><a><span>Cream Persian</span></a></li>
+            <li class="lock"><a><span>Tabby Mix</span></a></li>
+            <li class="lock"><a><span>Siamese</span></a></li>
+            <li class=""><a href="./index.html?pet=bengal"><span>Bengal</span></a></li>
+            <li class="lock"><a><span>Calico</span></a></li>
+            <li class="lock"><a><span>Maine Coon</span></a></li>
+            <li class="lock"><a><span>Himalayan</span></a></li>
+            <li class="lock"><a><span>Tuxedo Mix</span></a></li>
+            <li class=""><a href="./index.html?pet=abyssinian"><span>Abyssinian</span></a></li>
+            <li class="lock"><a><span>Nebelung</span></a></li>
+          </ul>
+        </div>
+      </div>
+        
+    <div style="clear:both"></div>
     </div>
   </div>
 
