@@ -189,6 +189,7 @@ class Dog extends Phaser.Scene
         this.load.video('situp.reward_b', `../../videos/${petType}/situp.reward_b.webm`, true);
         this.load.video('situp.fromsitupmouthclosed', `../../videos/${petType}/situp.mouthclosed._out.webm`, true);
         this.load.video('situp.fromlay', `../../videos/${petType}/mov.laytositup.webm`, true);
+        this.load.video('situp.rollover', `../../videos/${petType}/lay.rollover.webm`, true); // fromlay
         this.load.video('situp.fromsta', `../../videos/${petType}/mov.statositup.webm`, true);
 
         this.load.video('situpmouthclosed.blink', `../../videos/${petType}/situp.mouthclosed.blink.webm`, true);
@@ -254,7 +255,6 @@ class Dog extends Phaser.Scene
         this.load.video('lay.lickpaw', `../../videos/${petType}/lay.lickpaw.webm`, true);
         this.load.video('lay.blink', `../../videos/${petType}/lay.mouthopen.blink.webm`, true);
         this.load.video('lay.breathe', `../../videos/${petType}/lay.mouthopen.breathe.webm`, true);
-        this.load.video('lay.rollover', `../../videos/${petType}/lay.rollover.webm`, true);
         this.load.video('lay.rolloverhalf', `../../videos/${petType}/lay.rolloverhalf.webm`, true);
         this.load.video('lay.sneeze', `../../videos/${petType}/lay.sneeze.webm`, true);
         this.load.video('lay.bellyrub._out', `../../videos/${petType}/lay.bellyrub._out.webm`, true);
@@ -363,7 +363,7 @@ class Dog extends Phaser.Scene
         const closIdle = ['lickscreen_b', 'bark_a', 'sneeze']
         const situpIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'hindlegscratch', 'lickballs', 'look_l', 'look_r', 'sneeze']
         let sitIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'look_l', 'look_r', 'sneeze']
-        const layIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'lickballs', 'lickpaw', 'rollover', 'rolloverhalf', 'sneeze']
+        const layIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'lickballs', 'lickpaw', 'rolloverhalf', 'sneeze']
         let slpIdle = ['alive_a', 'alive_b']
         if (!missingFiles) {
             // To handle missing large.swf
@@ -374,10 +374,10 @@ class Dog extends Phaser.Scene
         const closMov = ['sta.fromclos']
         const situpMov = ['lay.fromsitup', 'sta.fromsitup']
         const sitMov = ['lay.fromsit', 'sta.fromsit']
-        const layMov = ['sit.fromlay', 'situp.fromlay', 'slp.fromlay', 'sta.fromlay']
+        const layMov = ['sit.fromlay', 'situp.fromlay', 'slp.fromlay', 'sta.fromlay', 'situp.rollover']
 
         // Action animation variants
-        const eating = ['eating.med', 'eating.lookup', 'eating.low']
+        const eating = ['eating.med', 'eating.med', 'eating.low', 'eating.low', 'eating.lookup']
         const playdisc = ['sta.disccatch_a', 'sta.disccatch_b', 'sta.disccatch_c', 'sta.discmiss_a', 'sta.discmiss_b']
         const playball = ['sta.ballcatch_a', 'sta.ballcatch_b', 'sta.ballmiss_a', 'sta.ballmiss_b']
 
