@@ -382,7 +382,7 @@ class Dog extends Phaser.Scene
         const playball = ['sta.ballcatch_a', 'sta.ballcatch_b', 'sta.ballmiss_a', 'sta.ballmiss_b']
 
         // Add audio
-        this.sound.pauseOnBlur = false
+        // this.sound.pauseOnBlur = false
         const barkSound = this.sound.add('barkSound');
         const closBarkSound = this.sound.add('closBarkSound');
         const barkBSound = this.sound.add('barkBSound');
