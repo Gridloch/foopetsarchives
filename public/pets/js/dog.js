@@ -310,7 +310,7 @@ class Dog extends Phaser.Scene
         this.load.video('eating.med', `../../videos/${petType}/sta.eat.med.webm`, true);
         this.load.video('sta.foodout', `../../videos/${petType}/sta.eat._out.webm`, true);
 
-        // this.load.video('waterin_b', `../../videos/${petType}/sta.drink._in_b.webm`, true);
+        // this.load.video('waterin_alt', `../../videos/${petType}/sta.drink._in.webm`, true);
         this.load.video('waterin', `../../videos/${petType}/sta.drink._in_b.webm`, true);
         this.load.video('drinking', `../../videos/${petType}/sta.drink.main.webm`, true);
         this.load.video('sta.waterout', `../../videos/${petType}/sta.drink._out.webm`, true);
@@ -359,7 +359,7 @@ class Dog extends Phaser.Scene
     {
         // ===== Set up variables and constants =====
         // Idle animations
-        const staIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', '_bark_b', 'bite', 'chasetail', 'headtilt', 'look_l', 'look_r', 'shake', 'sneeze', 'sniffscreen', 'squirm']
+        const staIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'bark_b', 'bite', 'chasetail', 'headtilt', 'look_l', 'look_r', 'shake', 'sneeze', 'sniffscreen', 'squirm']
         const closIdle = ['lickscreen_b', 'bark_a', 'sneeze']
         const situpIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'hindlegscratch', 'lickballs', 'look_l', 'look_r', 'sneeze']
         let sitIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'look_l', 'look_r', 'sneeze']
