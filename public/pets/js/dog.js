@@ -70,7 +70,7 @@ class Dog extends Phaser.Scene
         this.load.video('sta.backscratch._out', `../../videos/${petType}/sta.backscratch._out.webm`, true);
         this.load.video('sta.backscratch.main', `../../videos/${petType}/sta.backscratch.main.webm`, true);
         this.load.video('sta.buttscratch._in', `../../videos/${petType}/sta.buttscratch._in.webm`, true);
-        this.load.video('sta.backscratch._out', `../../videos/${petType}/sta.buttscratch._out.webm`, true);
+        this.load.video('sta.buttscratch._out', `../../videos/${petType}/sta.buttscratch._out.webm`, true);
         this.load.video('sta.buttscratch.main', `../../videos/${petType}/sta.buttscratch.main.webm`, true);
         this.load.video('sta.earscratch_l._in', `../../videos/${petType}/sta.earscratch_l._in.webm`, true);
         this.load.video('sta.earscratch_l._out', `../../videos/${petType}/sta.earscratch_l._out.webm`, true);
@@ -116,7 +116,7 @@ class Dog extends Phaser.Scene
 
         this.load.video('stamouthclosed.blink', `../../videos/${petType}/sta.mouthclosed.blink.webm`, true);
         this.load.video('stamouthclosed.breathe', `../../videos/${petType}/sta.mouthclosed.breathe.webm`, true);
-        this.load.video('stamouthclosed.fromclos', `../../videos/${petType}/sta.mouthclosed._in.webm`, true);
+        this.load.video('stamouthclosed.fromsta', `../../videos/${petType}/sta.mouthclosed._in.webm`, true);
 
         // clos
         this.load.video('clos.bark_a', `../../videos/${petType}/clos.bark_a.webm`, true);
@@ -362,19 +362,20 @@ class Dog extends Phaser.Scene
         const staIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'bark_b', 'bite', 'chasetail', 'headtilt', 'look_l', 'look_r', 'shake', 'sneeze', 'sniffscreen', 'squirm']
         const closIdle = ['lickscreen_b', 'bark_a', 'sneeze']
         const situpIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'hindlegscratch', 'lickballs', 'look_l', 'look_r', 'sneeze']
-        let sitIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'look_l', 'look_r', 'sneeze']
+        const sitIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'look_l', 'look_r', 'sneeze']
         const layIdle = ['alive_a', 'alive_b', 'alive_c', 'bark_a', 'headtilt', 'lickballs', 'lickpaw', 'rolloverhalf', 'sneeze']
-        let slpIdle = ['alive_a', 'alive_b']
+        const slpIdle = ['alive_a', 'alive_b']
+        const MouthClosedIdle = ['blink', 'breathe']
         if (!missingFiles) {
             // To handle missing large.swf
         }
 
         // Transition animations
-        const staMov = ['clos.fromsta', 'sit.fromsta', 'situp.fromsta']
+        const staMov = ['clos.fromsta', 'sit.fromsta', 'situp.fromsta', 'stamouthclosed.fromsta']
         const closMov = ['sta.fromclos']
-        const situpMov = ['lay.fromsitup', 'sta.fromsitup']
-        const sitMov = ['lay.fromsit', 'sta.fromsit']
-        const layMov = ['sit.fromlay', 'situp.fromlay', 'slp.fromlay', 'sta.fromlay', 'situp.rollover']
+        const situpMov = ['lay.fromsitup', 'sta.fromsitup', 'situpmouthclosed.fromsitup']
+        const sitMov = ['lay.fromsit', 'sta.fromsit', 'sitmouthclosed.fromsit']
+        const layMov = ['sit.fromlay', 'situp.fromlay', 'slp.fromlay', 'sta.fromlay', 'situp.rollover', 'aymouthclosed.fromlay']
 
         // Action animation variants
         const eating = ['eating.med', 'eating.med', 'eating.low', 'eating.low', 'eating.lookup']
@@ -414,23 +415,55 @@ class Dog extends Phaser.Scene
         // ===== Petting =====
         let keepDragging = true
         let headHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
-        let neckHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let earLHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let earRHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let muzzleLHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let muzzleRHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let neckLHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let neckRHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let chestHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let bellyHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let backHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
         let buttHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let pawLFHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let pawLBHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let pawRFHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let pawRBHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let eyeLHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let eyeRHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+        let noseHitbox = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+
         let head = this.add.graphics().setInteractive({ hitArea: headHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
-        let neck = this.add.graphics().setInteractive({ hitArea: neckHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let earL = this.add.graphics().setInteractive({ hitArea: earLHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let earR = this.add.graphics().setInteractive({ hitArea: earRHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let muzzleL = this.add.graphics().setInteractive({ hitArea: muzzleLHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let muzzleR = this.add.graphics().setInteractive({ hitArea: muzzleRHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let neckL = this.add.graphics().setInteractive({ hitArea: neckLHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let neckR = this.add.graphics().setInteractive({ hitArea: neckRHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let chest = this.add.graphics().setInteractive({ hitArea: chestHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
         let belly = this.add.graphics().setInteractive({ hitArea: bellyHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
         let back = this.add.graphics().setInteractive({ hitArea: backHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
         let butt = this.add.graphics().setInteractive({ hitArea: buttHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let pawLF = this.add.graphics().setInteractive({ hitArea: pawLFHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let pawLB = this.add.graphics().setInteractive({ hitArea: pawLBHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let pawRF = this.add.graphics().setInteractive({ hitArea: pawRFHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let pawRB = this.add.graphics().setInteractive({ hitArea: pawRBHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let eyeL = this.add.graphics().setInteractive({ hitArea: eyeLHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let eyeR = this.add.graphics().setInteractive({ hitArea: eyeRHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
+        let nose = this.add.graphics().setInteractive({ hitArea: noseHitbox, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
         let frame = this.add.graphics().setInteractive({ hitArea: new Phaser.Geom.Rectangle(0, 0, 330, 748), hitAreaCallback: Phaser.Geom.Rectangle.Contains });
         
-        this.input.setDraggable([head, neck, belly, back, butt]);
+        this.input.setDraggable([head, earL, earR, muzzleL, muzzleR, neckL, neckR, chest, belly, back, butt]);
         this.input.dragDistanceThreshold = 10;
         this.input.topOnly = false;
 
         head.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Head')});
-        neck.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Neck')});
+        earL.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'EarL')});
+        earR.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'EarR')});
+        muzzleL.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'MuzzleL')});
+        muzzleR.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'MuzzleR')});
+        neckL.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'NeckL')});
+        neckR.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'NeckR')});
         belly.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Belly')});
         back.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Back')});
         butt.on('drag', (pointer, dragX, dragY) => {petInteraction(pointer, dragX, dragY, 'Butt')});
@@ -450,10 +483,16 @@ class Dog extends Phaser.Scene
         
         frame.on('pointerup', () => { stopPetInteraction() })
         head.on('pointerup', () => { stopPetInteraction() })
-        neck.on('pointerup', () => { stopPetInteraction() })
+        earL.on('pointerup', () => { stopPetInteraction() })
+        earR.on('pointerup', () => { stopPetInteraction() })
+        muzzleL.on('pointerup', () => { stopPetInteraction() })
+        muzzleR.on('pointerup', () => { stopPetInteraction() })
+        neckL.on('pointerup', () => { stopPetInteraction() })
+        neckR.on('pointerup', () => { stopPetInteraction() })
         belly.on('pointerup', () => { stopPetInteraction() })
         back.on('pointerup', () => { stopPetInteraction() })
         butt.on('pointerup', () => { stopPetInteraction() })
+
         /**
          * Switches action to stop petting and reenables dragging
          */
@@ -462,6 +501,14 @@ class Dog extends Phaser.Scene
                 currentAction = `stopP${currentAction.substring(1)}`
             }; keepDragging = true 
         }
+
+        pawLF.on('pointerdown', () => { if (!action && !currentVid.includes('from')) { currentAction = 'pawLFPoke' } })
+        pawLB.on('pointerdown', () => { if (!action && !currentVid.includes('from')) { currentAction = 'pawLBPoke' } })
+        pawRF.on('pointerdown', () => { if (!action && !currentVid.includes('from')) { currentAction = 'pawRFPoke' } })
+        pawRB.on('pointerdown', () => { if (!action && !currentVid.includes('from')) { currentAction = 'pawRBPoke' } })
+        eyeL.on('pointerdown', () => { if (!action && !currentVid.includes('from')) { currentAction = 'eyeLPoke' } })
+        eyeR.on('pointerdown', () => { if (!action && !currentVid.includes('from')) { currentAction = 'eyeRPoke' } })
+        nose.on('pointerdown', () => { if (!action && !currentVid.includes('from')) { currentAction = 'nosePoke' } })
 
         /**
          * Adjusts the x, y, width and height of the given hitbox to match the provided values
@@ -483,7 +530,12 @@ class Dog extends Phaser.Scene
          */
         function resetHitboxes() {
             setHitbox(headHitbox, 0, 0, 0, 0)
-            setHitbox(neckHitbox, 0, 0, 0, 0)
+            setHitbox(earLHitbox, 0, 0, 0, 0)
+            setHitbox(earRHitbox, 0, 0, 0, 0)
+            setHitbox(muzzleLHitbox, 0, 0, 0, 0)
+            setHitbox(muzzleRHitbox, 0, 0, 0, 0)
+            setHitbox(neckLHitbox, 0, 0, 0, 0)
+            setHitbox(neckRHitbox, 0, 0, 0, 0)
             setHitbox(bellyHitbox, 0, 0, 0, 0)
             setHitbox(backHitbox, 0, 0, 0, 0)
             setHitbox(buttHitbox, 0, 0, 0, 0)
@@ -557,17 +609,31 @@ class Dog extends Phaser.Scene
 
         // ===== Video switching =====
         /**
-         * Transtions to sitting up and gives the pet some food
+         * Transitions to standing
+         * @returns The next video to play
+         */
+        function transitionToSta() {
+            let nextVid
+            if (pet.getVideoKey().startsWith('stamouthclosed')) {nextVid = `sta.fromstamouthclosed`; petSprite.setFrame('stamouthclosed')}
+            else if (pet.getVideoKey().startsWith('closmouthclosed')) {nextVid = `clos.fromclosmouthclosed`; petSprite.setFrame('closmouthclosed')}
+            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
+            else if (pet.getVideoKey().startsWith('situpmouthclosed')) {nextVid = `situp.fromsitupmouthclosed`; petSprite.setFrame('situpmouthclosed')}
+            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`; petSprite.setFrame('situp')}
+            else if (pet.getVideoKey().startsWith('sitmouthclosed')) {nextVid = `sit.fromsitmouthclosed`; petSprite.setFrame('sitmouthclosed')}
+            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`; petSprite.setFrame('sit')}
+            else if (pet.getVideoKey().startsWith('laymouthclosed')) {nextVid = `lay.fromlaymouthclosed`; petSprite.setFrame('laymouthclosed')}
+            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`; petSprite.setFrame('lay')}
+            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
+            return nextVid
+        }
+
+        /**
+         * Transtions to standing and gives the pet some food
          * @returns The next video to play
          */
         function giveFood() {
             let nextVid = null
-            if (pet.getVideoKey().startsWith('sta')) {nextVid = `foodin`; petSprite.setFrame('sta')}
-            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
-            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`; petSprite.setFrame('situp')}
-            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`; petSprite.setFrame('sit')}
-            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`; petSprite.setFrame('lay')}
-            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
+            if (pet.getVideoKey().startsWith('sta.')) {nextVid = `foodin`; petSprite.setFrame('sta')}
             else if (pet.getVideoKey().startsWith('eating.low')) {
                 action = false
                 currentAction = 'none'
@@ -580,6 +646,9 @@ class Dog extends Phaser.Scene
                 petSprite.setFrame('eat')
                 if (!nextVid.endsWith('lookup')) {eatSound.play()}
             }
+            else {
+                nextVid = transitionToSta()
+            }
             return nextVid
         }
 
@@ -589,12 +658,7 @@ class Dog extends Phaser.Scene
          */
         function giveWater() {
             let nextVid = null
-            if (pet.getVideoKey().startsWith('sta')) {nextVid = `waterin`; petSprite.setFrame('sta')}
-            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
-            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`; petSprite.setFrame('situp')}
-            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`; petSprite.setFrame('sit')}
-            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`; petSprite.setFrame('lay')}
-            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
+            if (pet.getVideoKey().startsWith('sta.')) {nextVid = `waterin`; petSprite.setFrame('sta')}
             else if (pet.getVideoKey().startsWith('drinking')) {
                 action = false
                 currentAction = 'none'
@@ -606,6 +670,9 @@ class Dog extends Phaser.Scene
                 nextVid = 'drinking';
                 petSprite.setFrame('drink')
             }
+            else {
+                nextVid = transitionToSta()
+            }
             return nextVid
         }
 
@@ -615,7 +682,7 @@ class Dog extends Phaser.Scene
          */
         function giveBall() {
             let nextVid = null
-            if (pet.getVideoKey().startsWith('sta')) {
+            if (pet.getVideoKey().startsWith('sta.')) {
                 action = false
                 currentAction = 'none'
                 nextVid = `${playball[randomIntFromInterval(0, playball.length-1)]}`; 
@@ -638,11 +705,9 @@ class Dog extends Phaser.Scene
                         break;
                 }
             }
-            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
-            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`; petSprite.setFrame('situp')}
-            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`; petSprite.setFrame('sit')}
-            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`; petSprite.setFrame('lay')}
-            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
+            else {
+                nextVid = transitionToSta()
+            }
             return nextVid
         }
 
@@ -652,7 +717,7 @@ class Dog extends Phaser.Scene
          */
         function giveDisc() {
             let nextVid = null
-            if (pet.getVideoKey().startsWith('sta')) {
+            if (pet.getVideoKey().startsWith('sta.')) {
                 action = false
                 currentAction = 'none'
                 nextVid = `${playdisc[randomIntFromInterval(0, playdisc.length-1)]}`; 
@@ -678,11 +743,9 @@ class Dog extends Phaser.Scene
                         break;
                 }
             }
-            else if (pet.getVideoKey().startsWith('clos')) {nextVid = `sta.fromclos`; petSprite.setFrame('clos')}
-            else if (pet.getVideoKey().startsWith('situp')) {nextVid = `sta.fromsitup`; petSprite.setFrame('situp')}
-            else if (pet.getVideoKey().startsWith('sit')) {nextVid = `sta.fromsit`; petSprite.setFrame('sit')}
-            else if (pet.getVideoKey().startsWith('lay')) {nextVid = `sta.fromlay`; petSprite.setFrame('lay')}
-            else if (pet.getVideoKey().startsWith('slp')) {nextVid = `lay.fromslp`; petSprite.setFrame('slp')}
+            else {
+                nextVid = transitionToSta()
+            }
             return nextVid
         }
 
@@ -694,12 +757,15 @@ class Dog extends Phaser.Scene
         function petAnimal(location) {
             let nextVid
             let position = getPetPosition()
-            console.log(position)
-            if (pet.getVideoKey() === `${position}.${location}scratch.main` || pet.getVideoKey() === `${position}.${location}scratch._in`) {
-                nextVid = `${position}.${location}scratch.main`
-                petSprite.setFrame(`${position}.${location}scratch`)
-                purrSound.play()
-            } else if (position === 'sta' && location === 'butt' ) {
+            if (pet.getVideoKey().includes('mouthclosed')) {
+                nextVid = `${position}.from${position}mouthclosed`
+                petSprite.setFrame(`${position}mouthclosed`)
+            }
+            else if (pet.getVideoKey() === `${position}.${location}.main` || pet.getVideoKey() === `${position}.${location}._in`) {
+                nextVid = `${position}.${location}.main`
+                petSprite.setFrame(`${position}.${location}`)
+                pantingSound.play()
+            } else if (position === 'sta' && location === 'buttscratch' ) {
                 // Buttscratch starts from backscratch instead of from main idle
                 if (pet.getVideoKey() === 'sta.backscratch._in') {
                     nextVid = 'sta.buttscratch._in'
@@ -709,7 +775,7 @@ class Dog extends Phaser.Scene
                     petSprite.setFrame(`sta`)
                 }
             } else {
-                nextVid = `${position}.${location}scratch._in`
+                nextVid = `${position}.${location}._in`
                 petSprite.setFrame(position)
             }
             return nextVid
@@ -725,10 +791,10 @@ class Dog extends Phaser.Scene
             currentAction = null
             let position = getPetPosition()
             action = false
-            if (pet.getVideoKey().startsWith(`${position}.${location}scratch`)) {
-                nextVid = `${position}.${location}scratch._out`
-                petSprite.setFrame(`${position}.${location}scratch`)
-                if (location === 'butt') {
+            if (pet.getVideoKey().startsWith(`${position}.${location}`)) {
+                nextVid = `${position}.${location}._out`
+                petSprite.setFrame(`${position}.${location}`)
+                if (location === 'buttscratch') {
                     // Buttscratch and ends through backscratch, so transition out of backscratch next
                     currentAction = 'stopPetBack'
                     action = true
@@ -773,6 +839,8 @@ class Dog extends Phaser.Scene
                 nextVid = `${movArray[randomIntFromInterval(0, movArray.length-1)]}`;
                 resetHitboxes()
             }
+            // Temporary
+            nextVid = `${position}.breathe`;
             return nextVid
         }
 
@@ -800,49 +868,108 @@ class Dog extends Phaser.Scene
                         nextVid = giveDisc()
                         resetHitboxes()
                         break;
-                    // case 'petHead':
-                    //     nextVid = petAnimal('head')
-                    //     break;
-                    // case 'petNeck':
-                    //     nextVid = petAnimal('neck')
-                    //     break;
-                    // case 'petBelly':
-                    //     nextVid = petAnimal('belly')
-                    //     break;
-                    // case 'petBack':
-                    //     nextVid = petAnimal('back')
-                    //     break;
-                    // case 'petButt':
-                    //     nextVid = petAnimal('butt')
-                    //     break;
-                    // case 'stopPetHead':
-                    //     nextVid = stopPetAnimal('head')
-                    //     break;
-                    // case 'stopPetNeck':
-                    //     nextVid = stopPetAnimal('neck')
-                    //     break;
-                    // case 'stopPetBelly':
-                    //     nextVid = stopPetAnimal('belly')
-                    //     break;
-                    // case 'stopPetBack':
-                    //     nextVid = stopPetAnimal('back')
-                    //     break;
-                    // case 'stopPetButt':
-                    //     nextVid = stopPetAnimal('butt')
-                    //     break;
-                
+                    case 'petHead':
+                        nextVid = petAnimal('headscratch')
+                        break;
+                    case 'petEarL':
+                        nextVid = petAnimal('earscratch_l')
+                        break;
+                    case 'petEarR':
+                        nextVid = petAnimal('earscratch_r')
+                        break;
+                    case 'petMuzzleL':
+                        nextVid = petAnimal('muzzlescratch_l')
+                        break;
+                    case 'petMuzzleR':
+                        nextVid = petAnimal('muzzlescratch_r')
+                        break;
+                    case 'petNeckL':
+                        nextVid = petAnimal('neckscratch_l')
+                        break;
+                    case 'petNeckR':
+                        nextVid = petAnimal('neckscratch_r')
+                        break;
+                    case 'petBelly':
+                        nextVid = petAnimal('bellyrub')
+                        break;
+                    case 'petBack':
+                        nextVid = petAnimal('backscratch')
+                        break;
+                    case 'petButt':
+                        nextVid = petAnimal('buttscratch')
+                        break;
+                    case 'stopPetHead':
+                        nextVid = stopPetAnimal('headscratch')
+                        break;
+                    case 'stopPetEarL':
+                        nextVid = stopPetAnimal('earscratch_l')
+                        break;
+                    case 'stopPetEarR':
+                        nextVid = stopPetAnimal('earscratch_r')
+                        break;
+                    case 'stopPetMuzzleL':
+                        nextVid = stopPetAnimal('muzzlescratch_l')
+                        break;
+                    case 'stopPetMuzzleR':
+                        nextVid = stopPetAnimal('muzzlescratch_r')
+                        break;
+                    case 'stopPetNeckL':
+                        nextVid = stopPetAnimal('neckscratch_l')
+                        break;
+                    case 'stopPetNeckR':
+                        nextVid = stopPetAnimal('neckscratch_r')
+                        break;
+                    case 'stopPetBelly':
+                        nextVid = stopPetAnimal('bellyrub')
+                        break;
+                    case 'stopPetBack':
+                        nextVid = stopPetAnimal('backscratch')
+                        break;
+                    case 'stopPetButt':
+                        nextVid = stopPetAnimal('buttscratch')
+                        break;
                     default:
                         action = false
                         break;
                 }
             }
-            else if (pet.getVideoKey().startsWith('sta')) {
-                nextVid = getNextVideo('sta', staIdle,staMov)
+            else if (pet.getVideoKey().startsWith('stamouthclosed')) {
+                nextVid = getNextVideo('stamouthclosed', MouthClosedIdle, ['sta.fromstamouthclosed'])
                 // Resize hitboxes for petting
                 // setHitbox(headHitbox, 307, 80, 60, 60)
                 // setHitbox(neckHitbox, 307, 140, 40, 60)
                 // setHitbox(backHitbox, 347, 140, 25, 60)
                 // setHitbox(buttHitbox, 372, 140, 25, 60)
+            } 
+            else if (pet.getVideoKey().startsWith('sta')) {
+                nextVid = getNextVideo('sta', staIdle,staMov)
+                // Resize hitboxes for petting
+                setHitbox(headHitbox, 330, 60, 45, 45)
+                setHitbox(earRHitbox, 311, 45, 30, 45)
+                setHitbox(earLHitbox, 364, 45, 30, 45)
+                setHitbox(muzzleRHitbox, 321, 105, 30, 25)
+                setHitbox(muzzleLHitbox, 354, 105, 30, 25)
+                setHitbox(neckLHitbox, 348, 130, 40, 55)
+                setHitbox(neckRHitbox, 308, 130, 40, 55)
+                setHitbox(backHitbox, 388, 120, 25, 85)
+                setHitbox(buttHitbox, 413, 125, 25, 65)
+                
+                // this.add.graphics().fillStyle(0x000000).fillRect(354, 105, 30, 25).setAlpha(.75); // muzzleL
+                // this.add.graphics().fillStyle(0x000000).fillRect(321, 105, 30, 25).setAlpha(.75); // muzzleR
+                // this.add.graphics().fillStyle(0x000000).fillRect(308, 130, 40, 55).setAlpha(.5); // neckR
+                // this.add.graphics().fillStyle(0x000000).fillRect(348, 130, 40, 55).setAlpha(.5); // neckL
+
+                // this.add.graphics().fillStyle(0x000000).fillRect(323, 90, 25, 20).setAlpha(.5); // eyeL
+                // this.add.graphics().fillStyle(0x000000).fillRect(358, 90, 25, 20).setAlpha(.5); // eyeR
+                // this.add.graphics().fillStyle(0x000000).fillRect(341, 105, 25, 20).setAlpha(.5); // nose
+                // this.add.graphics().fillStyle(0x000000).fillRect(296, 245, 45, 30).setAlpha(.5); // PawFR
+                // this.add.graphics().fillStyle(0x000000).fillRect(340, 210, 30, 25).setAlpha(.5); // PawBR
+                // this.add.graphics().fillStyle(0x000000).fillRect(374, 248, 45, 30).setAlpha(.5); // PawFL
+                // this.add.graphics().fillStyle(0x000000).fillRect(420, 215, 30, 25).setAlpha(.5); // PawBL
+            } 
+            else if (pet.getVideoKey().startsWith('closmouthclosed')) {
+                nextVid = getNextVideo('closmouthclosed', MouthClosedIdle, ['clos.fromclosmouthclosed', 'clos.lickscreen_a'])
+                // Resize hitboxes for petting
             } 
             else if (pet.getVideoKey().startsWith('clos')) {
                 nextVid = getNextVideo('clos', closIdle, closMov)
@@ -850,17 +977,29 @@ class Dog extends Phaser.Scene
                 // setHitbox(headHitbox, 296, 65, 120, 80)
                 // setHitbox(neckHitbox, 300, 155, 120, 80)
             } 
+            else if (pet.getVideoKey().startsWith('situpmouthclosed')) {
+                nextVid = getNextVideo('situpmouthclosed', MouthClosedIdle, ['situp.fromsitupmouthclosed'])
+                // Resize hitboxes for petting
+            } 
             else if (pet.getVideoKey().startsWith('situp')) {
                 nextVid = getNextVideo('situp', situpIdle, situpMov)
                 // Resize hitboxes for petting
                 // setHitbox(headHitbox, 317, 80, 60, 55)
                 // setHitbox(neckHitbox, 317, 135, 60, 40)
             } 
+            else if (pet.getVideoKey().startsWith('sitmouthclosed')) {
+                nextVid = getNextVideo('sitmouthclosed', MouthClosedIdle, ['sit.fromsitmouthclosed'])
+                // Resize hitboxes for petting
+            } 
             else if (pet.getVideoKey().startsWith('sit')) {
                 // Resize hitboxes for petting
                 // setHitbox(headHitbox, 327, 90, 60, 55)
                 // setHitbox(neckHitbox, 317, 145, 60, 50)
                 nextVid = getNextVideo('sit', sitIdle, sitMov)
+            } 
+            else if (pet.getVideoKey().startsWith('laymouthclosed')) {
+                nextVid = getNextVideo('laymouthclosed', MouthClosedIdle, ['lay.fromlaymouthclosed'])
+                // Resize hitboxes for petting
             } 
             else if (pet.getVideoKey().startsWith('lay')) {
                 // Resize hitboxes for petting
@@ -888,12 +1027,12 @@ class Dog extends Phaser.Scene
     currentVid: ${currentVid}
     action: ${action}
     currentAction: ${currentAction}`)
-                if (currentVid.startsWith('sta')) {nextVid = 'sta.breathe'; petSprite = 'sta'}
-                else if (currentVid.startsWith('clos')) {nextVid = 'clos.breathe'; petSprite = 'clos'}
-                else if (currentVid.startsWith('situp')) {nextVid = 'situp.breathe'; petSprite = 'situp'}
-                else if (currentVid.startsWith('sit')) {nextVid = 'sit.breathe'; petSprite = 'sit'}
-                else if (currentVid.startsWith('lay')) {nextVid = 'lay.breathe'; petSprite = 'lay'}
-                else if (currentVid.startsWith('slp')) {nextVid = 'slp.breathe'; petSprite = 'slp'}
+                if (currentVid.startsWith('sta')) {nextVid = 'sta.breathe'; petSprite.setFrame('sta')}
+                else if (currentVid.startsWith('clos')) {nextVid = 'clos.breathe'; petSprite.setFrame('clos')}
+                else if (currentVid.startsWith('situp')) {nextVid = 'situp.breathe'; petSprite.setFrame('situp')}
+                else if (currentVid.startsWith('sit')) {nextVid = 'sit.breathe'; petSprite.setFrame('sit')}
+                else if (currentVid.startsWith('lay')) {nextVid = 'lay.breathe'; petSprite.setFrame('lay')}
+                else if (currentVid.startsWith('slp')) {nextVid = 'slp.breathe'; petSprite.setFrame('slp')}
                 else {nextVid = currentVid}
                 action = false
             } 
@@ -947,6 +1086,24 @@ class Dog extends Phaser.Scene
             // Play the video
             pet.play()
         }
+
+        
+        this.add.graphics().fillStyle(0x000000).fillRect(330, 60, 45, 45).setAlpha(.5); // head
+        this.add.graphics().fillStyle(0x000000).fillRect(364, 45, 30, 45).setAlpha(.5); // earL
+        this.add.graphics().fillStyle(0x000000).fillRect(311, 45, 30, 45).setAlpha(.5); // earR
+        this.add.graphics().fillStyle(0x000000).fillRect(354, 105, 30, 25).setAlpha(.75); // muzzleL
+        this.add.graphics().fillStyle(0x000000).fillRect(321, 105, 30, 25).setAlpha(.75); // muzzleR
+        this.add.graphics().fillStyle(0x000000).fillRect(308, 130, 40, 55).setAlpha(.5); // neckR
+        this.add.graphics().fillStyle(0x000000).fillRect(348, 130, 40, 55).setAlpha(.5); // neckL
+        this.add.graphics().fillStyle(0x000000).fillRect(388, 120, 25, 85).setAlpha(.25); // back
+        this.add.graphics().fillStyle(0x000000).fillRect(413, 125, 25, 65).setAlpha(.5); // butt
+        this.add.graphics().fillStyle(0x000000).fillRect(323, 90, 25, 20).setAlpha(.5); // eyeL
+        this.add.graphics().fillStyle(0x000000).fillRect(358, 90, 25, 20).setAlpha(.5); // eyeR
+        this.add.graphics().fillStyle(0x000000).fillRect(341, 105, 25, 20).setAlpha(.5); // nose
+        this.add.graphics().fillStyle(0x000000).fillRect(296, 245, 45, 30).setAlpha(.5); // PawFR
+        this.add.graphics().fillStyle(0x000000).fillRect(340, 210, 30, 25).setAlpha(.5); // PawBR
+        this.add.graphics().fillStyle(0x000000).fillRect(374, 248, 45, 30).setAlpha(.5); // PawFL
+        this.add.graphics().fillStyle(0x000000).fillRect(420, 215, 30, 25).setAlpha(.5); // PawBL
 
         /**
              * Generates a random integer between two values
