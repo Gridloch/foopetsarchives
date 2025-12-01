@@ -1088,22 +1088,23 @@ class Dog extends Phaser.Scene
         }
 
         
-        this.add.graphics().fillStyle(0x000000).fillRect(330, 60, 45, 45).setAlpha(.5); // head
-        this.add.graphics().fillStyle(0x000000).fillRect(364, 45, 30, 45).setAlpha(.5); // earL
-        this.add.graphics().fillStyle(0x000000).fillRect(311, 45, 30, 45).setAlpha(.5); // earR
-        this.add.graphics().fillStyle(0x000000).fillRect(354, 105, 30, 25).setAlpha(.75); // muzzleL
-        this.add.graphics().fillStyle(0x000000).fillRect(321, 105, 30, 25).setAlpha(.75); // muzzleR
-        this.add.graphics().fillStyle(0x000000).fillRect(308, 130, 40, 55).setAlpha(.5); // neckR
-        this.add.graphics().fillStyle(0x000000).fillRect(348, 130, 40, 55).setAlpha(.5); // neckL
-        this.add.graphics().fillStyle(0x000000).fillRect(388, 120, 25, 85).setAlpha(.25); // back
-        this.add.graphics().fillStyle(0x000000).fillRect(413, 125, 25, 65).setAlpha(.5); // butt
-        this.add.graphics().fillStyle(0x000000).fillRect(323, 90, 25, 20).setAlpha(.5); // eyeL
-        this.add.graphics().fillStyle(0x000000).fillRect(358, 90, 25, 20).setAlpha(.5); // eyeR
-        this.add.graphics().fillStyle(0x000000).fillRect(341, 105, 25, 20).setAlpha(.5); // nose
-        this.add.graphics().fillStyle(0x000000).fillRect(296, 245, 45, 30).setAlpha(.5); // PawFR
-        this.add.graphics().fillStyle(0x000000).fillRect(340, 210, 30, 25).setAlpha(.5); // PawBR
-        this.add.graphics().fillStyle(0x000000).fillRect(374, 248, 45, 30).setAlpha(.5); // PawFL
-        this.add.graphics().fillStyle(0x000000).fillRect(420, 215, 30, 25).setAlpha(.5); // PawBL
+        // Use this to show hitbox locations
+        // this.add.graphics().fillStyle(0x000000).fillRect(330, 60, 45, 45).setAlpha(.5); // head
+        // this.add.graphics().fillStyle(0x000000).fillRect(364, 45, 30, 45).setAlpha(.5); // earL
+        // this.add.graphics().fillStyle(0x000000).fillRect(311, 45, 30, 45).setAlpha(.5); // earR
+        // this.add.graphics().fillStyle(0x000000).fillRect(354, 105, 30, 25).setAlpha(.75); // muzzleL
+        // this.add.graphics().fillStyle(0x000000).fillRect(321, 105, 30, 25).setAlpha(.75); // muzzleR
+        // this.add.graphics().fillStyle(0x000000).fillRect(308, 130, 40, 55).setAlpha(.5); // neckR
+        // this.add.graphics().fillStyle(0x000000).fillRect(348, 130, 40, 55).setAlpha(.5); // neckL
+        // this.add.graphics().fillStyle(0x000000).fillRect(388, 120, 25, 85).setAlpha(.25); // back
+        // this.add.graphics().fillStyle(0x000000).fillRect(413, 125, 25, 65).setAlpha(.5); // butt
+        // this.add.graphics().fillStyle(0x000000).fillRect(323, 90, 25, 20).setAlpha(.5); // eyeL
+        // this.add.graphics().fillStyle(0x000000).fillRect(358, 90, 25, 20).setAlpha(.5); // eyeR
+        // this.add.graphics().fillStyle(0x000000).fillRect(341, 105, 25, 20).setAlpha(.5); // nose
+        // this.add.graphics().fillStyle(0x000000).fillRect(296, 245, 45, 30).setAlpha(.5); // PawFR
+        // this.add.graphics().fillStyle(0x000000).fillRect(340, 210, 30, 25).setAlpha(.5); // PawBR
+        // this.add.graphics().fillStyle(0x000000).fillRect(374, 248, 45, 30).setAlpha(.5); // PawFL
+        // this.add.graphics().fillStyle(0x000000).fillRect(420, 215, 30, 25).setAlpha(.5); // PawBL
 
         /**
              * Generates a random integer between two values
